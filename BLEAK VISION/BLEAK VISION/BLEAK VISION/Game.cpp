@@ -1,10 +1,10 @@
 #include "Game.h"
-#include <iostream>
 
 Game::Game() :
 	m_window(sf::VideoMode({ 1920U, 1080U }), "BLEAK VISION"), // Main Window
 	m_exitGame{ false } // Closing Window
 {
+	setupPlayer();
 }
 
 Game::~Game()
@@ -49,12 +49,12 @@ void Game::processEvents()
 	{
 		if (event->is<sf::Event::Closed>())
 			m_window.close();
-		if (const auto resized = event->getIf<sf::Event::Resized>())
+		else if (const auto resized = event->getIf<sf::Event::Resized>()) //debugging to see if window resizing works
 		{
 			std::cout << "new width: " << resized->size.x << std::endl;
-			std::cout << "new height: " << resized->size.x << std::endl;
+			std::cout << "new height: " << resized->size.y << std::endl;
 		}
-		else if (const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) //user pressed a key
+		else if(const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) //user pressed a key
 		{
 			processKeys(*event);
 		}
@@ -71,6 +71,24 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
+	else
+	{
+		m_playerController.playerMovement(t_event, true);
+	}
+}
+
+/// <summary>
+/// Checks if any key is pressed (used to start deceleration)
+/// </summary>
+/// <returns></returns>
+bool Game::isAnyKeyPressed()
+{
+	for (int k = -1; k < sf::Keyboard::KeyCount; ++k)
+	{
+		if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(k)))
+			return true;
+	}
+	return false;
 }
 
 /// <summary>
@@ -83,6 +101,7 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	m_playerController.playerIdle(isAnyKeyPressed());
 }
 
 /// <summary>
@@ -90,6 +109,15 @@ void Game::update(sf::Time t_deltaTime)
 /// </summary>
 void Game::render()
 {
-	m_window.clear(sf::Color::Black);
+	m_window.clear(sf::Color::White);
+	m_window.draw(m_player.getSprite());
 	m_window.display();
+}
+
+/// <summary>
+/// Setting player up
+/// </summary>
+void Game::setupPlayer()
+{
+	m_player.setPosition({ 500, 500 });
 }

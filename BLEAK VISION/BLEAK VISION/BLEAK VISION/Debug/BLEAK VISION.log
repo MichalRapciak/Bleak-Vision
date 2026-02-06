@@ -1,1 +1,15 @@
-﻿  BLEAK VISION.vcxproj -> C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\Debug\BLEAK VISION.exe
+﻿  Game.cpp
+  Player.cpp
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,32): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,32): warning C4305:         with
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,32): warning C4305:         [
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,32): warning C4305:             T=float
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,32): warning C4305:         ]
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,28): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,28): warning C4305:         with
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,28): warning C4305:         [
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,28): warning C4305:             T=float
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Player.cpp(16,28): warning C4305:         ]
+  main.cpp
+  Generating Code...
+  BLEAK VISION.vcxproj -> C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\Debug\BLEAK VISION.exe
