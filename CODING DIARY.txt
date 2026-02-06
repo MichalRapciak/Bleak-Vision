@@ -1,0 +1,11 @@
+6/2/2026
+Started the project - created new project file
+Set up SFML
+Created main Game function and window, defined functions for:
+Key Presses
+Events
+Game Updates
+Game Running
+Had issues with the new SFML 3.0 Events handling options, specifically
+I was struggling with sending values from the Events function to the Keys handling function. Found answers on stack overflow where I forgot to de-reference the value before sending it.
+Tested it so the window and events/key handling functions work. All works!
