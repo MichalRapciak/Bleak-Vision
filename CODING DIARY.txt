@@ -12,3 +12,7 @@ Tested it so the window and events/key handling functions work. All works!
 Added a player character with a placeholder sprite.
 I forgot to set TextureRect so I couldn't see the sprite for an hour.
 Added Player movement through velocity, with deceleration. Needs tuning.
+7/2/2026
+Worked on player movement further. Smoothened it by using Key Pressed and Key Released functions.
+Added sprinting mechanics
+Added Aiming and player sprite rotation depending on where player is facing.

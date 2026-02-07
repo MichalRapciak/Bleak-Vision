@@ -54,9 +54,14 @@ void Game::processEvents()
 			std::cout << "new width: " << resized->size.x << std::endl;
 			std::cout << "new height: " << resized->size.y << std::endl;
 		}
-		else if(const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) //user pressed a key
+		if(const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) //user pressed a key
 		{
 			processKeys(*event);
+			m_playerController.inputHandler(*event);
+		}
+		if(const auto keyReleased = event->getIf<sf::Event::KeyReleased>())
+		{
+			m_playerController.inputHandler(*event);
 		}
 	}
 }
@@ -71,24 +76,6 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
-	else
-	{
-		m_playerController.playerMovement(t_event, true);
-	}
-}
-
-/// <summary>
-/// Checks if any key is pressed (used to start deceleration)
-/// </summary>
-/// <returns></returns>
-bool Game::isAnyKeyPressed()
-{
-	for (int k = -1; k < sf::Keyboard::KeyCount; ++k)
-	{
-		if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(k)))
-			return true;
-	}
-	return false;
 }
 
 /// <summary>
@@ -101,7 +88,10 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
-	m_playerController.playerIdle(isAnyKeyPressed());
+	mouseWorld = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)); // This gets mouse position in the world, depending on camera/view
+	m_playerController.update();
+	m_playerController.mouseAiming(mouseWorld);
+	m_player.update(t_deltaTime.asSeconds());
 }
 
 /// <summary>

@@ -16,14 +16,24 @@ public:
 	void setPlayerTexture(sf::Texture t_texture) { m_playerTexture = t_texture; std::cout << "set player text" << std::endl; }
 	float getSpeed() { return m_playerSpeed; }
 	sf::Vector2f getVelocity() { return m_playerVelocity; }
+	void setVelocity(sf::Vector2f t_velocity) { m_playerVelocity = t_velocity;  }
 	float getTopSpeed() { return m_playerTopSpeed; }
+	float getSprintSpeed() { return m_playerSprintSpeed; }
+	sf::Vector2f getPlayerAim() { return m_playerAim; }
+	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
+	void updateAim(sf::Vector2f t_mousePos, float facingDir);
+
+
+	void update(float dt);
 	
 
 private:
 	sf::Sprite m_playerSprite;
 	sf::Texture m_playerTexture;
 	sf::Vector2f m_playerPosition;
-	float m_playerSpeed = 1;
-	float m_playerTopSpeed = 5;
+	float m_playerSpeed = 15;
+	float m_playerTopSpeed = 80;
+	float m_playerSprintSpeed = 160;
 	sf::Vector2f m_playerVelocity{ 0.0,0.0 };
+	sf::Vector2f m_playerAim{ 0, 0 }; // coordinates where player is aiming
 };

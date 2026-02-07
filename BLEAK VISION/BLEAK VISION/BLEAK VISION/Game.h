@@ -20,11 +20,11 @@ private:
 
 	Player m_player;
 	PlayerController m_playerController{ m_player };
+	sf::Vector2f mouseWorld = { 0,0 };
 
 	void setupPlayer();
 	void processEvents();
 	void processKeys(sf::Event t_event);
-	bool isAnyKeyPressed();
 	void update(sf::Time t_deltaTime);
 	void render();
 
