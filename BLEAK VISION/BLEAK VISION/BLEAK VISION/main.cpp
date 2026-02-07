@@ -4,7 +4,7 @@
 /// Estimated Time:
 /// Time Spent:
 /// 06/02/2026 - 7 Hours
-/// 07/02/2026 - 3 hours
+/// 07/02/2026 - 6 hours
 /// 
 /// </summary>
 
@@ -17,7 +17,7 @@
 #else 
 #pragma comment(lib,"sfml-graphics.lib") 
 #pragma comment(lib,"sfml-audio.lib") 
-#pragma comment(lib,"sfml-system.lib") 
+#pragma comment(lib,"sfml-system.lib")
 #pragma comment(lib,"sfml-window.lib") 
 #pragma comment(lib,"sfml-network.lib") 
 #endif 

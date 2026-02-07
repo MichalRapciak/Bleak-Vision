@@ -22,8 +22,6 @@ public:
 	sf::Vector2f getPlayerAim() { return m_playerAim; }
 	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_mousePos, float facingDir);
-
-
 	void update(float dt);
 	
 

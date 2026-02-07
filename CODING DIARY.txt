@@ -16,3 +16,9 @@ Added Player movement through velocity, with deceleration. Needs tuning.
 Worked on player movement further. Smoothened it by using Key Pressed and Key Released functions.
 Added sprinting mechanics
 Added Aiming and player sprite rotation depending on where player is facing.
+Added Enemy and EnemyController Class
+Added Enemy sprite
+Added Enemy Random Movement
+Added Enemy Facing Player when Player is nearby
+Added camera that follows player
+Added temporary background image (to show player camera movement)

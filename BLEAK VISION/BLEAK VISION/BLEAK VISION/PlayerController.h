@@ -30,6 +30,6 @@ private:
 	float m_playerDeceleration = 1;
 	sf::Vector2f mousePos = { 0,0 };
 	sf::Vector2f m_facingDirection = { 0,0 };
-	float m_angleRadians;
-	float m_angleDegrees;
+	float m_angleRadians = 0.0f;
+	float m_angleDegrees = 0.0f;
 };

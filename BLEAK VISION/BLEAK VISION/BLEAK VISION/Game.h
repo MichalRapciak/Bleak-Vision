@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "PlayerController.h"
+#include "Enemy.h"
+#include "EnemyController.h"
+#include "Level.h"
 
 #endif
 
@@ -21,6 +24,11 @@ private:
 	Player m_player;
 	PlayerController m_playerController{ m_player };
 	sf::Vector2f mouseWorld = { 0,0 };
+	sf::View m_playerCam; // Player-centered camera
+	Level m_level1;
+
+	Enemy m_enemy;
+	EnemyController m_enemyController{ m_enemy };
 
 	void setupPlayer();
 	void processEvents();

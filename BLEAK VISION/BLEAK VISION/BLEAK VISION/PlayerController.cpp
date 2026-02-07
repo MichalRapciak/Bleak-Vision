@@ -165,7 +165,6 @@ void PlayerController::update()
 		}
 	}
 	m_player.setVelocity(m_speedVector); // sends the new velocity to the player where it's updated
-	std::cout << m_speedVector.x << " , " << m_speedVector.y << std::endl; // debugging text output to see current velocity
 }
 
 /// <summary>
@@ -176,7 +175,7 @@ void PlayerController::mouseAiming(sf::Vector2f t_mouseWorld)
 {
 	m_facingDirection = t_mouseWorld - m_player.getPosition(); // Get the direction vector by taking away player's position from the mouse cursor
 	m_angleRadians = std::atan2(m_facingDirection.y, m_facingDirection.x); // Calculate the angle into radians
-	m_angleDegrees = m_angleRadians * 180.0f / 3.14159265f; // calculate the angle into degrees
+	m_angleDegrees = m_angleRadians * 180.0f / 3.14159265f; // calculate the radians into degrees
 	m_angleDegrees += 90.f; // add an offset as the sprite is facing up by default
 	m_player.updateAim(t_mouseWorld, m_angleDegrees); // send information to update player aim in the player class
 }
