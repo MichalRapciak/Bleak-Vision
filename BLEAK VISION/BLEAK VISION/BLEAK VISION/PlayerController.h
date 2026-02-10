@@ -13,7 +13,7 @@ public:
 	~PlayerController();
 
 	void inputHandler(const sf::Event t_event);
-	void update();
+	void update(float dt);
 	void mouseAiming(sf::Vector2f t_mouseWorld);
 
 private:
@@ -26,10 +26,12 @@ private:
 	bool m_left = false;
 	bool m_right = false;
 	bool isSprinting = false;
+	bool isShooting = false;
 	const int m_speedNearlyZero = 1; // This value determines when player's speed is considered "nearly zero" and is used in a statement to set player's speed to 0.
 	float m_playerDeceleration = 1;
 	sf::Vector2f mousePos = { 0,0 };
 	sf::Vector2f m_facingDirection = { 0,0 };
 	float m_angleRadians = 0.0f;
 	float m_angleDegrees = 0.0f;
+
 };

@@ -1,4 +1,5 @@
 #include "PlayerController.h"
+#include "WeaponType.h"
 #include "Player.h"
 
 PlayerController::PlayerController(Player& player) : m_player(player)
@@ -37,6 +38,19 @@ void PlayerController::inputHandler(const sf::Event t_event)
 		{
 			isSprinting = true;
 		}
+		if (keyPressed->scancode == sf::Keyboard::Scancode::Num1)
+		{
+			m_player.equipWeapon(weaponType::melee);
+		}
+		if (keyPressed->scancode == sf::Keyboard::Scancode::Num2)
+		{
+		}
+		if (keyPressed->scancode == sf::Keyboard::Scancode::Num3)
+		{
+		}
+		if (keyPressed->scancode == sf::Keyboard::Scancode::Num4)
+		{
+		}
 	}
 	if (const auto keyReleased = t_event.getIf<sf::Event::KeyReleased>())
 	{
@@ -61,6 +75,14 @@ void PlayerController::inputHandler(const sf::Event t_event)
 			isSprinting = false;
 		}
 	}
+	if (const auto buttonPressed = t_event.getIf<sf::Event::MouseButtonPressed>())
+	{
+		isShooting = true;
+	}
+	if (const auto buttonReleased = t_event.getIf<sf::Event::MouseButtonReleased>())
+	{
+		isShooting = false;
+	}
 }
 
 
@@ -68,7 +90,7 @@ void PlayerController::inputHandler(const sf::Event t_event)
 /// updating player movement - can be turned off if within menus.
 /// </summary>
 /// <param name="isPressed"></param>
-void PlayerController::update()
+void PlayerController::update(float dt)
 {
 	if (m_up) // these 4 statements set player velocity in given direction
 	{
@@ -124,6 +146,11 @@ void PlayerController::update()
 		{
 			m_speedVector.y = -m_player.getSprintSpeed();
 		}
+	}
+	//
+	if (isShooting)
+	{
+		m_player.shooting(dt);
 	}
 	//
 	if (m_up == false && m_down == false && m_left == false && m_right == false) //these two if statements make sure player is not "vibrating" when the velocity is very small.

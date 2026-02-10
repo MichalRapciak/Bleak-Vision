@@ -22,3 +22,16 @@ Added Enemy Random Movement
 Added Enemy Facing Player when Player is nearby
 Added camera that follows player
 Added temporary background image (to show player camera movement)
+9/2/2026
+Started writing weapons class
+Started with weapon type enums
+Took a long time linking all the classes together properly between:
+Player, PlayerController and Weapon
+At the end I realised it's better if I create a basic weapon class
+that declares functions for weapon type sub classes - making adding weapons
+for player and enemy easier later on. Will have to rewrite tomorrow.
+10/2/2026
+I rewrote Weapon code to separate Weapons and Weapon Types. I have a WeaponType enum so I can reference the weapons in PlayerController without having to actually call them there.
+Weapon class points the player to the WeaponType classes which hold all actual information about the Weapon the player is currently holding
+This makes it easy to edit weapons and add new weapons without having to rewrite existing code to facilitate for the changes.
+Implemented a system where the player can shoot/attack and the game acknowledges if the player is holding a weapon or not, if the weapon has a cooldown active and can't shoot, or whhether the weapon can shoot.

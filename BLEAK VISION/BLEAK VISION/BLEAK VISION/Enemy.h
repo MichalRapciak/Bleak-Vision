@@ -36,5 +36,7 @@ private:
 	float m_enemySprintSpeed = 120;
 	sf::Vector2f m_enemyVelocity{ 0.0,0.0 };
 	sf::Vector2f m_enemyAim{ 0, 0 };
+	bool isDamaged = false;
+	float m_enemyHealth = 20;
 
 };

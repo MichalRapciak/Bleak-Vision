@@ -66,6 +66,14 @@ void Game::processEvents()
 		{
 			m_playerController.inputHandler(*event);
 		}
+		if (const auto buttonPressed = event->getIf<sf::Event::MouseButtonPressed>())
+		{
+			m_playerController.inputHandler(*event);
+		}
+		if (const auto buttonReleased = event->getIf<sf::Event::MouseButtonReleased>())
+		{
+			m_playerController.inputHandler(*event);
+		}
 	}
 }
 
@@ -94,7 +102,7 @@ void Game::update(sf::Time t_deltaTime)
 	m_enemyController.aimAtPlayer(m_player.getPosition());
 	m_enemyController.movementAI();
 	mouseWorld = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)); // This gets mouse position in the world, depending on camera/view
-	m_playerController.update();
+	m_playerController.update(t_deltaTime.asSeconds());
 	m_playerController.mouseAiming(mouseWorld);
 	m_player.update(t_deltaTime.asSeconds());
 	m_enemy.update(t_deltaTime.asSeconds());
@@ -110,6 +118,7 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 	m_window.draw(m_level1.getLevelBG());
 	m_window.draw(m_player.getSprite());
+	m_window.draw(m_player.getWeaponSprite());
 	m_window.draw(m_enemy.getSprite());
 	m_window.display();
 }
