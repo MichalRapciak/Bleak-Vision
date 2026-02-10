@@ -3,7 +3,7 @@
 #include <math.h>
 #include <random>
 
-EnemyController::EnemyController(Enemy& enemy) : m_enemy(enemy)
+EnemyController::EnemyController(std::vector<std::unique_ptr<Enemy>>& enemies) : m_enemies(enemies)
 {
 	srand(time(nullptr)); // sets up random seed
 }
@@ -16,7 +16,11 @@ EnemyController::~EnemyController()
 /// </summary>
 void EnemyController::update()
 {
-	m_enemy.setVelocity(m_speedVector); // sends the new velocity to the enemy where it's updated
+	for (auto& enemyPtr : m_enemies)
+	{
+		Enemy& enemy = *enemyPtr;
+		enemy.setVelocity(m_speedVector); // sends the new velocity to the enemy where it's updated
+	}
 }
 
 /// <summary>
@@ -25,24 +29,28 @@ void EnemyController::update()
 /// <param name="t_playerPos"></param>
 void EnemyController::aimAtPlayer(sf::Vector2f t_playerPos)
 {
-	dx = t_playerPos.x - m_enemy.getPosition().x;
-	dy = t_playerPos.y - m_enemy.getPosition().y;
-	m_playerDistance = std::sqrt((dx * dx) + (dy * dy)); // distance from player
-	if (m_playerDistance < 500)
+	for (auto& enemyPtr : m_enemies)
 	{
-		m_facingDirection = t_playerPos - m_enemy.getPosition(); // Get the direction vector by taking away enemy's position from the player's position
-		m_angleRadians = std::atan2(m_facingDirection.y, m_facingDirection.x); // Calculate the angle into radians
-		m_angleDegrees = m_angleRadians * 180.0f / 3.14159265f; // calculate the radians into degrees
-		m_angleDegrees += 90.f; // add an offset as the sprite is facing up by default
-		m_enemy.updateAim(t_playerPos, m_angleDegrees); // send information to update enemy aim in the enemy class
-	}
-	else if (isMoving)
-	{
-		m_facingDirection = m_enemyNewPos - m_enemy.getPosition();
-		m_angleRadians = std::atan2(m_facingDirection.y, m_facingDirection.x);
-		m_angleDegrees = m_angleRadians * 180.0f / 3.1459265f;
-		m_angleDegrees += 90.0f;
-		m_enemy.updateAim(t_playerPos, m_angleDegrees);
+		Enemy& enemy = *enemyPtr;
+		dx = t_playerPos.x - enemy.getPosition().x;
+		dy = t_playerPos.y - enemy.getPosition().y;
+		enemy.setDistToPlayer(std::sqrt((dx * dx) + (dy * dy))); // distance from player
+		if (enemy.getDistToPlayer() < 500)
+		{
+			enemy.setFacingDir(t_playerPos - enemy.getPosition()); // Get the direction vector by taking away enemy's position from the player's position
+			m_angleRadians = std::atan2(enemy.getFacingDir().y, enemy.getFacingDir().x); // Calculate the angle into radians
+			m_angleDegrees = m_angleRadians * 180.0f / 3.14159265f; // calculate the radians into degrees
+			m_angleDegrees += 90.f; // add an offset as the sprite is facing up by default
+			enemy.updateAim(t_playerPos, m_angleDegrees); // send information to update enemy aim in the enemy class
+		}
+		else if (enemy.getIsMoving())
+		{
+			enemy.setFacingDir(enemy.getNewPos() - enemy.getPosition());
+			m_angleRadians = std::atan2(enemy.getFacingDir().y, enemy.getFacingDir().x);
+			m_angleDegrees = m_angleRadians * 180.0f / 3.1459265f;
+			m_angleDegrees += 90.0f;
+			enemy.updateAim(t_playerPos, m_angleDegrees);
+		}
 	}
 }
 
@@ -51,44 +59,43 @@ void EnemyController::aimAtPlayer(sf::Vector2f t_playerPos)
 /// </summary>
 void EnemyController::movementAI()
 {
-	if (!isMoving) // this picks a coordinate for the enemy to walk towards if it's not moving
+	for (auto& enemyPtr : m_enemies)
 	{
-		randomNo = (rand() % 500) + 1;
+		Enemy& enemy = *enemyPtr;
+		if (!enemy.getIsMoving()) // this picks a coordinate for the enemy to walk towards if it's not moving
 		{
-			if (randomNo == 1)
+			randomNo = (rand() % 500) + 1;
 			{
-				m_enemyNewPos.x = m_enemy.getPosition().x + (rand() % 50) + 50;
-				m_enemyNewPos.y = m_enemy.getPosition().y + (rand() % 50) + 50;
-				isMoving = true;
-			}
-			if (randomNo == 2)
-			{
-				m_enemyNewPos.x = m_enemy.getPosition().x - (rand() % 50) + 50;
-				m_enemyNewPos.y = m_enemy.getPosition().y + (rand() % 50) + 50;
-				isMoving = true;
-			}
-			if (randomNo == 3)
-			{
-				m_enemyNewPos.x = m_enemy.getPosition().x + (rand() % 50) + 50;
-				m_enemyNewPos.y = m_enemy.getPosition().y - (rand() % 50) + 50;
-				isMoving = true;
-			}
-			if (randomNo == 4)
-			{
-				m_enemyNewPos.x = m_enemy.getPosition().x - (rand() % 50) + 50;
-				m_enemyNewPos.y = m_enemy.getPosition().y - (rand() % 50) + 50;
-				isMoving = true;
-			}
+				if (randomNo == 1)
+				{
+					enemy.setNewPos({ enemy.getPosition().x + (rand() % 50) + 50,enemy.getPosition().y + (rand() % 50) + 50 });
+					enemy.setIsMoving(true);
+				}
+				if (randomNo == 2)
+				{
+					enemy.setNewPos({ enemy.getPosition().x - (rand() % 50) + 50,enemy.getPosition().y + (rand() % 50) + 50 });
+					enemy.setIsMoving(true);
+				}
+				if (randomNo == 3)
+				{
+					enemy.setNewPos({ enemy.getPosition().x + (rand() % 50) + 50,enemy.getPosition().y - (rand() % 50) + 50 });
+					enemy.setIsMoving(true);
+				}
+				if (randomNo == 4)
+				{
+					enemy.setNewPos({ enemy.getPosition().x - (rand() % 50) + 50,enemy.getPosition().y - (rand() % 50) + 50 });
+					enemy.setIsMoving(true);
+				}
 
+			}
 		}
-	}
-	m_speedVector = { (m_enemyNewPos.x - m_enemy.getPosition().x) , (m_enemyNewPos.y - m_enemy.getPosition().y)};
-	m_distanceFromGoal = std::sqrt((m_enemyNewPos.x - m_enemy.getPosition().x)* (m_enemyNewPos.x - m_enemy.getPosition().x) + 
-		(m_enemyNewPos.y - m_enemy.getPosition().y)* (m_enemyNewPos.y - m_enemy.getPosition().y));
-	m_enemy.setVelocity(m_speedVector);
-	if (m_distanceFromGoal < 20)
-	{
-		m_speedVector = { 0,0 };
-		isMoving = false;
+		enemy.setVelocity( { (enemy.getNewPos().x - enemy.getPosition().x) , (enemy.getNewPos().y - enemy.getPosition().y)});
+		enemy.setDistToGoal(std::sqrt((enemy.getNewPos().x - enemy.getPosition().x) * (enemy.getNewPos().x - enemy.getPosition().x) +
+			(enemy.getNewPos().y - enemy.getPosition().y) * (enemy.getNewPos().y - enemy.getPosition().y)));
+		if (enemy.getDistToGoal() < 20)
+		{
+			enemy.setVelocity({ 0,0 });
+			enemy.setIsMoving(false);
+		}
 	}
 }

@@ -5,7 +5,7 @@ Game::Game() :
 	m_exitGame{ false } // Closing Window
 {
 	setupPlayer();
-	m_playerCam.setCenter(m_player.getPosition());
+	m_playerCam.setCenter(m_player->getPosition());
 	m_playerCam.zoom(1.5f);
 	m_playerCam.setSize({ 1920,1080 });
 }
@@ -60,19 +60,19 @@ void Game::processEvents()
 		if(const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) //user pressed a key
 		{
 			processKeys(*event);
-			m_playerController.inputHandler(*event);
+			m_playerController->inputHandler(*event);
 		}
 		if(const auto keyReleased = event->getIf<sf::Event::KeyReleased>())
 		{
-			m_playerController.inputHandler(*event);
+			m_playerController->inputHandler(*event);
 		}
 		if (const auto buttonPressed = event->getIf<sf::Event::MouseButtonPressed>())
 		{
-			m_playerController.inputHandler(*event);
+			m_playerController->inputHandler(*event);
 		}
 		if (const auto buttonReleased = event->getIf<sf::Event::MouseButtonReleased>())
 		{
-			m_playerController.inputHandler(*event);
+			m_playerController->inputHandler(*event);
 		}
 	}
 }
@@ -87,6 +87,12 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G))
+	{
+		auto newEnemy = std::make_unique<Enemy>();
+		m_enemies.push_back(std::move(newEnemy));
+		refreshEntities();
+	}
 }
 
 /// <summary>
@@ -99,15 +105,20 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
-	m_enemyController.aimAtPlayer(m_player.getPosition());
-	m_enemyController.movementAI();
+	m_enemyController->aimAtPlayer(m_player->getPosition());
+	m_enemyController->movementAI();
 	mouseWorld = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)); // This gets mouse position in the world, depending on camera/view
-	m_playerController.update(t_deltaTime.asSeconds());
-	m_playerController.mouseAiming(mouseWorld);
-	m_player.update(t_deltaTime.asSeconds());
-	m_enemy.update(t_deltaTime.asSeconds());
+	m_playerController->update(t_deltaTime.asSeconds());
+	m_playerController->mouseAiming(mouseWorld);
+	m_player->update(t_deltaTime.asSeconds());
+	for (auto& enemy : m_enemies)
+	{
+		enemy->update(t_deltaTime.asSeconds());
+	}
+	refreshEntities();
+	Collisions::getInstance().update(m_entities);
 	m_window.setView(m_playerCam); // Set Camera to player camera
-	m_playerCam.setCenter({ (m_player.getPosition().x),(m_player.getPosition().y) }); // Center player camera to the player
+	m_playerCam.setCenter({ (m_player->getPosition().x),(m_player->getPosition().y) }); // Center player camera to the player
 }
 
 /// <summary>
@@ -117,16 +128,61 @@ void Game::render()
 {
 	m_window.clear(sf::Color::Black);
 	m_window.draw(m_level1.getLevelBG());
-	m_window.draw(m_player.getSprite());
-	m_window.draw(m_player.getWeaponSprite());
-	m_window.draw(m_enemy.getSprite());
+	m_window.draw(m_player->getSprite());
+	m_window.draw(m_player->getWeaponSprite());
+	for (auto& enemy : m_enemies)
+	{
+		m_window.draw(enemy->getSprite());
+	}
+	/*
+	if (m_player->getWeapon()) {  // check pointer
+		m_window.draw(m_player->getWeapon()->getDebugBox());
+	}
+	*/
 	m_window.display();
 }
 
 /// <summary>
-/// Setting player up
+/// Setting player up, temporarily setting up enemies
 /// </summary>
 void Game::setupPlayer()
 {
-	m_player.setPosition({ 500, 500 });
+	m_player = std::make_unique<Player>();
+	m_entities.push_back(m_player.get());
+	m_playerController = std::make_unique<PlayerController>(*m_player);
+	auto newEnemy = std::make_unique<Enemy>();
+	Entity* entityPtr = newEnemy.get();
+	m_entities.push_back(entityPtr);
+	m_enemies.push_back(std::move(newEnemy));
+	m_enemyController = std::make_unique<EnemyController>(m_enemies);
+	m_player->setPosition({ 500, 500 });
+}
+
+/// <summary>
+/// Function in charge of deleting dead enemies and entities and updating their vectors
+/// </summary>
+void Game::refreshEntities()
+{
+	m_entities.clear();
+	m_enemies.erase // erase enemies from remove_if's new end point to the old end point of the vector
+	(
+		std::remove_if // this function gives erase a new end point to the vector by moving "enemy dead" returns to the end of the vector
+		(
+			m_enemies.begin(), //from the start of the vector
+			m_enemies.end(), // to the end of the vector
+			[](const std::unique_ptr<Enemy>& e)
+			{
+				return e->getDead(); // an enemy returns as dead
+			}
+		),
+		m_enemies.end() // the current end point of the vector
+	);
+	if (m_player)
+	{
+		m_entities.push_back(m_player.get());
+	}
+	for (auto& enemy : m_enemies)
+	{
+		m_entities.push_back(enemy.get());
+	}
 }

@@ -2,11 +2,13 @@
 #include <SFML/Graphics.hpp>
 #include "WeaponType.h"
 #include <iostream>
+#include "Entity.h"
+//#include "Weapon.h"
 #include <memory>
 
 class Weapon;
 
-class Player
+class Player : public Entity
 {
 public:
 	Player();
@@ -23,6 +25,9 @@ public:
 	void setVelocity(sf::Vector2f t_velocity) { m_playerVelocity = t_velocity; }
 	float getTopSpeed() { return m_playerTopSpeed; }
 	float getSprintSpeed() { return m_playerSprintSpeed; }
+	float getHealth() const override { return m_playerHealth; }
+	sf::FloatRect getBoundingBox() const override { return m_playerSprite.getGlobalBounds(); }
+	void takeDamage(float amount) override { m_playerHealth -= amount; }
 	sf::Vector2f getPlayerAim() { return m_playerAim; }
 	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_mousePos, float facingDir);
@@ -30,6 +35,7 @@ public:
 	void shooting(float dt);
 	void equipWeapon(weaponType t_weaponType);
 	sf::Sprite getWeaponSprite() { return m_weaponSprite; }
+	//Weapon* getWeapon() const { if (m_weapon) { return m_weapon.get(); } else {} }
 	
 
 private:
@@ -46,4 +52,5 @@ private:
 	std::unique_ptr<Weapon> m_weapon; // Creates a pointer to a weapon
 	sf::Sprite m_weaponSprite;
 	sf::Texture m_weaponTxt;
+	bool isDead = false;
 };

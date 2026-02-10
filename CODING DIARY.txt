@@ -35,3 +35,8 @@ I rewrote Weapon code to separate Weapons and Weapon Types. I have a WeaponType 
 Weapon class points the player to the WeaponType classes which hold all actual information about the Weapon the player is currently holding
 This makes it easy to edit weapons and add new weapons without having to rewrite existing code to facilitate for the changes.
 Implemented a system where the player can shoot/attack and the game acknowledges if the player is holding a weapon or not, if the weapon has a cooldown active and can't shoot, or whhether the weapon can shoot.
+Rewrote the enemies and players as entities
+Rewrote enemy into a vector of enemies
+Rewrote collisions, render and update checks to work around multiple enemies
+Fixed Collisions to work around no enemies on screen
+Implemented Collisions

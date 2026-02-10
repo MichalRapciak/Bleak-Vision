@@ -5,7 +5,7 @@
 /// This function checks if the weapon is currently able to shoot
 /// </summary>
 /// <param name="dt"></param>
-void Weapon::tryFire(float dt)
+void Weapon::tryFire(float dt, Player& player)
 {
 	if (!m_readyToShoot) // if it's not ready to shoot, keep adding time passed to the cooldown timer
 	{
@@ -18,7 +18,7 @@ void Weapon::tryFire(float dt)
 	}
 	if (m_readyToShoot) // if it's ready to shoot
 	{
-		fire(); // go to the weapon type and use the fire function there
+		fire(player); // go to the weapon type and use the fire function there
 		m_readyToShoot = false; // after the weapon fires, start cooldown again
 	}
 }
