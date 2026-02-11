@@ -108,12 +108,16 @@ void Game::update(sf::Time t_deltaTime)
 	m_enemyController->aimAtPlayer(m_player->getPosition());
 	m_enemyController->movementAI();
 	mouseWorld = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)); // This gets mouse position in the world, depending on camera/view
-	m_playerController->update(t_deltaTime.asSeconds());
+	m_playerController->update(t_deltaTime.asSeconds(),*this);
 	m_playerController->mouseAiming(mouseWorld);
 	m_player->update(t_deltaTime.asSeconds());
 	for (auto& enemy : m_enemies)
 	{
 		enemy->update(t_deltaTime.asSeconds());
+	}
+	for (auto& projectile : m_projectiles)
+	{
+		projectile->update(t_deltaTime.asSeconds());
 	}
 	refreshEntities();
 	Collisions::getInstance().update(m_entities);
@@ -133,6 +137,10 @@ void Game::render()
 	for (auto& enemy : m_enemies)
 	{
 		m_window.draw(enemy->getSprite());
+	}
+	for (auto& projectile : m_projectiles)
+	{
+		m_window.draw(projectile->getSprite());
 	}
 	/*
 	if (m_player->getWeapon()) {  // check pointer
@@ -156,6 +164,18 @@ void Game::setupPlayer()
 	m_enemies.push_back(std::move(newEnemy));
 	m_enemyController = std::make_unique<EnemyController>(m_enemies);
 	m_player->setPosition({ 500, 500 });
+	if (!m_sProjTxt.loadFromFile("ASSETS/WEAPON/sProjPlaceholder.png"))
+	{
+		std::cout << "Error loading Small Projectile Texture\n";
+	}
+	if (!m_mProjTxt.loadFromFile("ASSETS/WEAPON/mProjPlaceholder.png"))
+	{
+		std::cout << "Error loading Medium Projectile Texture\n";
+	}
+	if (!m_LProjTxt.loadFromFile("ASSETS/WEAPON/LProjPlaceholder.png"))
+	{
+		std::cout << "Error loading Large Projectile Texture\n";
+	}
 }
 
 /// <summary>
@@ -177,6 +197,19 @@ void Game::refreshEntities()
 		),
 		m_enemies.end() // the current end point of the vector
 	);
+	m_projectiles.erase // same as enemies, clears dead projectiles
+	(
+		std::remove_if
+		(
+			m_projectiles.begin(),
+			m_projectiles.end(),
+			[](const std::unique_ptr<Projectile>& p)
+			{
+				return p->getDead();
+			}
+		),
+		m_projectiles.end()
+	);
 	if (m_player)
 	{
 		m_entities.push_back(m_player.get());
@@ -184,5 +217,24 @@ void Game::refreshEntities()
 	for (auto& enemy : m_enemies)
 	{
 		m_entities.push_back(enemy.get());
+	}
+	for (auto& projectiles : m_projectiles)
+	{
+		m_entities.push_back(projectiles.get());
+	}
+}
+void Game::spawnProjectile(Entity* shooter, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range, int txt)
+{
+	if (txt == 1)
+	{
+		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_sProjTxt, position, direction, speed, damage, range));
+	}
+	if (txt == 2)
+	{
+		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_mProjTxt, position, direction, speed, damage, range));
+	}
+	if (txt == 3)
+	{
+		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_LProjTxt, position, direction, speed, damage, range));
 	}
 }

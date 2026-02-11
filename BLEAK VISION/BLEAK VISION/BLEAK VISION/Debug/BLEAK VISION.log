@@ -1,2 +1,5 @@
-﻿  Game.cpp
+﻿  Projectile.cpp
+C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Projectile.h(23,33): warning C4244: 'return': conversion from 'const float' to 'int', possible loss of data
+  (compiling source file 'Projectile.cpp')
+  
   BLEAK VISION.vcxproj -> C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\Debug\BLEAK VISION.exe

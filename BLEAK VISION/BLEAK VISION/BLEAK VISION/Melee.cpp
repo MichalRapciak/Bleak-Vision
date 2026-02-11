@@ -6,7 +6,7 @@
 /// <summary>
 /// Function in charge of the weapon shooting
 /// </summary>
-void Melee::fire(Player& player)
+void Melee::fire(Player& player, Game& game)
 {
 	float rotationRadians = player.getSprite().getRotation().asRadians() - 1.5708;
 	sf::Vector2f facingDirection;

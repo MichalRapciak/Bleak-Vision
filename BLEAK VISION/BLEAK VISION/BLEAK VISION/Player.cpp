@@ -1,6 +1,9 @@
 #include "Player.h"
 #include "Weapon.h"
 #include "Melee.h"
+#include "ShortRange.h"
+#include "MediumRange.h"
+#include "LongRange.h"
 
 /// <summary>
 /// Setting up player sprite when the player function is created.
@@ -37,6 +40,7 @@ void Player::update(float dt)
 		if (m_weapon) // if a weapon is created, keep it glued to the player
 		{
 			m_weaponSprite.setPosition({ m_playerPosition.x, m_playerPosition.y });
+			m_weapon->updateCooldown(dt);
 		}
 	}
 }
@@ -59,11 +63,11 @@ void Player::updateAim(sf::Vector2f t_mousePos, float facingDir)
 /// This function is in charge of shooting
 /// </summary>
 /// <param name="dt"></param>
-void Player::shooting(float dt)
+void Player::shooting(float dt, Game& game)
 {
 	if (m_weapon) //if holding a weapon, try shoot. This line is necessary since if the player tries to shoot with no weapon active, the function points to null and crashes the game.
 	{
-		m_weapon->tryFire(dt,*this); // *this passes this (the player) to the weapon
+		m_weapon->tryFire(dt,*this,game); // *this passes this (the player) to the weapon
 	}
 	else
 	{
@@ -81,6 +85,18 @@ void Player::equipWeapon(weaponType t_weaponType)
 		if (t_weaponType == weaponType::melee) // If you select a melee weapon
 		{
 			m_weapon = std::make_unique<Melee>(); // Creates Melee Weapon instance
+		}
+		else if (t_weaponType == weaponType::short_range) // If you select a melee weapon
+		{
+			m_weapon = std::make_unique<ShortRange>();
+		}
+		else if (t_weaponType == weaponType::medium_range)
+		{
+			m_weapon = std::make_unique<MediumRange>();
+		}
+		else if (t_weaponType == weaponType::long_range)
+		{
+			m_weapon = std::make_unique<LongRange>();
 		}
 		m_weaponSprite.setTexture(m_weapon->getTxt()); // Takes texture of current weapon (in this case melee in the melee class)
 		sf::Vector2i txtSize = { (int)m_weaponSprite.getTexture().getSize().x, (int)m_weaponSprite.getTexture().getSize().y }; // gets the size of the texture

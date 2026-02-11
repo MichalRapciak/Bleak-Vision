@@ -3,10 +3,10 @@
 #include "WeaponType.h"
 #include <iostream>
 #include "Entity.h"
-//#include "Weapon.h"
 #include <memory>
 
 class Weapon;
+class Game;
 
 class Player : public Entity
 {
@@ -32,7 +32,7 @@ public:
 	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_mousePos, float facingDir);
 	void update(float dt);
-	void shooting(float dt);
+	void shooting(float dt, Game& game);
 	void equipWeapon(weaponType t_weaponType);
 	sf::Sprite getWeaponSprite() { return m_weaponSprite; }
 	//Weapon* getWeapon() const { if (m_weapon) { return m_weapon.get(); } else {} }

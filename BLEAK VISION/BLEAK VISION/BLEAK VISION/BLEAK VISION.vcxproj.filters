@@ -42,6 +42,18 @@
     <ClCompile Include="Melee.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShortRange.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MediumRange.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LongRange.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -78,6 +90,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MediumRange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LongRange.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

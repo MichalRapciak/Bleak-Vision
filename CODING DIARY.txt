@@ -40,3 +40,10 @@ Rewrote enemy into a vector of enemies
 Rewrote collisions, render and update checks to work around multiple enemies
 Fixed Collisions to work around no enemies on screen
 Implemented Collisions
+11/2/2026
+Created projectiles
+Created multiple weapon types and implemented them
+Implemented damage drop off based on distance travelled
+Implemented collisions on multiple projectiles
+Implemented projectile deaths
+Rewrote code to better facilitate collisions and multiple weapons

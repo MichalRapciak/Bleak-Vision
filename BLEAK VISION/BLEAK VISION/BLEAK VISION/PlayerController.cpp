@@ -44,12 +44,15 @@ void PlayerController::inputHandler(const sf::Event t_event)
 		}
 		if (keyPressed->scancode == sf::Keyboard::Scancode::Num2)
 		{
+			m_player.equipWeapon(weaponType::short_range);
 		}
 		if (keyPressed->scancode == sf::Keyboard::Scancode::Num3)
 		{
+			m_player.equipWeapon(weaponType::medium_range);
 		}
 		if (keyPressed->scancode == sf::Keyboard::Scancode::Num4)
 		{
+			m_player.equipWeapon(weaponType::long_range);
 		}
 	}
 	if (const auto keyReleased = t_event.getIf<sf::Event::KeyReleased>())
@@ -90,7 +93,7 @@ void PlayerController::inputHandler(const sf::Event t_event)
 /// updating player movement - can be turned off if within menus.
 /// </summary>
 /// <param name="isPressed"></param>
-void PlayerController::update(float dt)
+void PlayerController::update(float dt, Game& game)
 {
 	if (m_up) // these 4 statements set player velocity in given direction
 	{
@@ -150,7 +153,7 @@ void PlayerController::update(float dt)
 	//
 	if (isShooting)
 	{
-		m_player.shooting(dt);
+		m_player.shooting(dt, game);
 	}
 	//
 	if (m_up == false && m_down == false && m_left == false && m_right == false) //these two if statements make sure player is not "vibrating" when the velocity is very small.

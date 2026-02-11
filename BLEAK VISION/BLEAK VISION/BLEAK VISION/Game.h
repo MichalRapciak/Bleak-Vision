@@ -8,6 +8,8 @@
 #include "EnemyController.h"
 #include "Level.h"
 #include "Collisions.h"
+#include "Projectile.h"
+#include "HitInfo.h"
 
 #endif
 
@@ -17,6 +19,7 @@ public:
 	Game(); // main game function
 	~Game();
 	void run();
+	void spawnProjectile(Entity* shooter, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range, int txt);
 
 private:
 	sf::RenderWindow m_window; // main SFML window
@@ -31,6 +34,11 @@ private:
 	std::vector<Entity*> m_entities;
 	std::vector<std::unique_ptr<Enemy>> m_enemies;
 	std::unique_ptr<EnemyController> m_enemyController;
+
+	std::vector<std::unique_ptr<Projectile>> m_projectiles;
+	sf::Texture m_sProjTxt;
+	sf::Texture m_mProjTxt;
+	sf::Texture m_LProjTxt;
 
 	void setupPlayer();
 	void processEvents();

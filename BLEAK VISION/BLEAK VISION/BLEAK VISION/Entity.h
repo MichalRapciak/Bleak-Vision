@@ -11,4 +11,7 @@ public:
 	virtual float getHealth() const = 0;
 	virtual void takeDamage(float amount) = 0;
 
+private:
+
+
 };

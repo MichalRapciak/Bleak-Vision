@@ -17,9 +17,9 @@ public:
 private:
 	//sf::RectangleShape m_debugBox;
 	float m_weaponRange = 100;
-	float m_weaponDamage = 4;
+	float m_weaponDamage = 10;
 	float m_weaponAmmo = 0;
 
-	virtual void fire(Player& player) override; // only the weapon class decides if the current weapon type is allowed to fire
+	virtual void fire(Player& player, Game& game) override; // only the weapon class decides if the current weapon type is allowed to fire
 
 };

@@ -8,7 +8,8 @@ class Entity;
 /// </summary>
 struct HitInfo
 {
-	sf::FloatRect area;
-	float damage;
-	Entity* entity;
+	sf::FloatRect area; // area of the hit
+	float damage; // damage of the hit
+	Entity* entity; // the entity doing the hit
+	Entity* ignore; // ignore these entities - this is specifically if entity doing the hit is a projectile, ignore the entity that shot it
 };
