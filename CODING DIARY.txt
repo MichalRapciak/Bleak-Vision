@@ -47,3 +47,11 @@ Implemented damage drop off based on distance travelled
 Implemented collisions on multiple projectiles
 Implemented projectile deaths
 Rewrote code to better facilitate collisions and multiple weapons
+12/2/2026
+Added Level background and tilemap
+Added tilemap collisions for Player, Enemy and Bullets/Projectiles
+Had to rewrite tilemap collisions for player multiple times as there were issues with misaligned collisions, physics glitches etc.
+Added random enemy spawning in areas of the map
+13/2/2026
+Upon testing game .exe, found out it doesn't work in release mode.
+Rebuilt SFML from scratch and cleaned up the project in order to have it seamlessly working between Debug and Release in the future.

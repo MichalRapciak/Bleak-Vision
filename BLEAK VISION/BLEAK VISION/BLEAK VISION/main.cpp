@@ -8,20 +8,22 @@
 /// 09/02/2026 - 7 hours
 /// 10/02/2026 - 12 hours
 /// 11/02/2026 - 8 hours
+/// 12/02/2026 - 14 hours
+/// 13/02/2026 - 3 hours
 /// </summary>
 
 #ifdef _DEBUG 
-#pragma comment(lib,"sfml-graphics-d.lib") 
-#pragma comment(lib,"sfml-audio-d.lib") 
-#pragma comment(lib,"sfml-system-d.lib") 
-#pragma comment(lib,"sfml-window-d.lib") 
-#pragma comment(lib,"sfml-network-d.lib") 
+#pragma comment(lib,"sfml-graphics-s-d.lib") 
+#pragma comment(lib,"sfml-audio-s-d.lib") 
+#pragma comment(lib,"sfml-system-s-d.lib") 
+#pragma comment(lib,"sfml-window-s-d.lib") 
+#pragma comment(lib,"sfml-network-s-d.lib") 
 #else 
-#pragma comment(lib,"sfml-graphics.lib") 
-#pragma comment(lib,"sfml-audio.lib") 
-#pragma comment(lib,"sfml-system.lib")
-#pragma comment(lib,"sfml-window.lib") 
-#pragma comment(lib,"sfml-network.lib") 
+#pragma comment(lib,"sfml-graphics-s.lib") 
+#pragma comment(lib,"sfml-audio-s.lib") 
+#pragma comment(lib,"sfml-system-s.lib")
+#pragma comment(lib,"sfml-window-s.lib") 
+#pragma comment(lib,"sfml-network-s.lib") 
 #endif 
 
 #include "Game.h"

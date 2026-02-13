@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include "Collisions.h"
 #include <iostream>
+#include "Level.h"
 
 Projectile::Projectile(Entity* owner, const sf::Texture& texture, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range) : m_projSprite(texture)
 {
@@ -20,7 +21,7 @@ Projectile::~Projectile()
 {
 }
 
-void Projectile::update(float dt)
+void Projectile::update(float dt, Level& level)
 {
 	if (!m_isDead)
 	{
@@ -34,6 +35,10 @@ void Projectile::update(float dt)
 			m_damage = m_baseDamage * std::max(0.25f, m_damageMultiplier);
 		}
 		move(m_velocity * dt);
+		if (level.isSolid({ (int)m_position.x / 100,(int)m_position.y / 100 }) == true)
+		{
+			m_isDead = true;
+		}
 		if (m_distanceTravelled > 3000)
 		{
 			m_isDead = true;
@@ -43,7 +48,6 @@ void Projectile::update(float dt)
 			HitInfo hit;
 			hit.area = getBoundingBox();
 			hit.damage = m_damage;
-			std::cout << m_damage << std::endl;
 			hit.entity = this;
 			hit.ignore = m_owner;
 			Collisions::getInstance().addHit(hit);

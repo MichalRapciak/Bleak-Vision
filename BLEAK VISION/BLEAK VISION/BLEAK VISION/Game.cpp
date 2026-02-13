@@ -4,7 +4,7 @@ Game::Game() :
 	m_window(sf::VideoMode({ 1920U, 1080U }), "BLEAK VISION"), // Main Window
 	m_exitGame{ false } // Closing Window
 {
-	setupPlayer();
+	setupGame();
 	m_playerCam.setCenter(m_player->getPosition());
 	m_playerCam.zoom(1.5f);
 	m_playerCam.setSize({ 1920,1080 });
@@ -110,14 +110,15 @@ void Game::update(sf::Time t_deltaTime)
 	mouseWorld = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)); // This gets mouse position in the world, depending on camera/view
 	m_playerController->update(t_deltaTime.asSeconds(),*this);
 	m_playerController->mouseAiming(mouseWorld);
-	m_player->update(t_deltaTime.asSeconds());
+	m_player->update(t_deltaTime.asSeconds(),m_level1);
+	m_level1.spawnEnemies(*this);
 	for (auto& enemy : m_enemies)
 	{
-		enemy->update(t_deltaTime.asSeconds());
+		enemy->update(t_deltaTime.asSeconds(), m_level1);
 	}
 	for (auto& projectile : m_projectiles)
 	{
-		projectile->update(t_deltaTime.asSeconds());
+		projectile->update(t_deltaTime.asSeconds(), m_level1);
 	}
 	refreshEntities();
 	Collisions::getInstance().update(m_entities);
@@ -142,7 +143,7 @@ void Game::render()
 	{
 		m_window.draw(projectile->getSprite());
 	}
-	/*
+	/* This is used to draw the debug box around melee attack area
 	if (m_player->getWeapon()) {  // check pointer
 		m_window.draw(m_player->getWeapon()->getDebugBox());
 	}
@@ -153,7 +154,7 @@ void Game::render()
 /// <summary>
 /// Setting player up, temporarily setting up enemies
 /// </summary>
-void Game::setupPlayer()
+void Game::setupGame()
 {
 	m_player = std::make_unique<Player>();
 	m_entities.push_back(m_player.get());
@@ -163,7 +164,6 @@ void Game::setupPlayer()
 	m_entities.push_back(entityPtr);
 	m_enemies.push_back(std::move(newEnemy));
 	m_enemyController = std::make_unique<EnemyController>(m_enemies);
-	m_player->setPosition({ 500, 500 });
 	if (!m_sProjTxt.loadFromFile("ASSETS/WEAPON/sProjPlaceholder.png"))
 	{
 		std::cout << "Error loading Small Projectile Texture\n";
@@ -237,4 +237,12 @@ void Game::spawnProjectile(Entity* shooter, const sf::Vector2f& position, const 
 	{
 		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_LProjTxt, position, direction, speed, damage, range));
 	}
+}
+
+void Game::spawnEnemy(sf::Vector2f t_pos)
+{
+	auto newEnemy = std::make_unique<Enemy>();
+	newEnemy->setPosition(t_pos);
+	m_enemies.push_back(std::move(newEnemy));
+	refreshEntities();
 }

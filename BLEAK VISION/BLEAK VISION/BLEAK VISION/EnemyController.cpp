@@ -19,7 +19,7 @@ void EnemyController::update()
 	for (auto& enemyPtr : m_enemies)
 	{
 		Enemy& enemy = *enemyPtr;
-		enemy.setVelocity(m_speedVector); // sends the new velocity to the enemy where it's updated
+		enemy.setVelocity(enemy.getSpeedVector()); // sends the new velocity to the enemy where it's updated
 	}
 }
 
@@ -64,32 +64,49 @@ void EnemyController::movementAI()
 		Enemy& enemy = *enemyPtr;
 		if (!enemy.getIsMoving()) // this picks a coordinate for the enemy to walk towards if it's not moving
 		{
-			randomNo = (rand() % 500) + 1;
+			randomNo = (rand() % 800) + 1;
 			{
 				if (randomNo == 1)
 				{
-					enemy.setNewPos({ enemy.getPosition().x + (rand() % 50) + 50,enemy.getPosition().y + (rand() % 50) + 50 });
+					enemy.setNewPos({ enemy.getPosition().x + (rand() % 400) + 50,enemy.getPosition().y + (rand() % 400) + 50 });
 					enemy.setIsMoving(true);
 				}
 				if (randomNo == 2)
 				{
-					enemy.setNewPos({ enemy.getPosition().x - (rand() % 50) + 50,enemy.getPosition().y + (rand() % 50) + 50 });
+					enemy.setNewPos({ enemy.getPosition().x - ((rand() % 400) + 50),enemy.getPosition().y + (rand() % 400) + 50 });
 					enemy.setIsMoving(true);
 				}
 				if (randomNo == 3)
 				{
-					enemy.setNewPos({ enemy.getPosition().x + (rand() % 50) + 50,enemy.getPosition().y - (rand() % 50) + 50 });
+					enemy.setNewPos({ enemy.getPosition().x + (rand() % 400) + 50,enemy.getPosition().y - ((rand() % 400) + 50 )});
 					enemy.setIsMoving(true);
 				}
 				if (randomNo == 4)
 				{
-					enemy.setNewPos({ enemy.getPosition().x - (rand() % 50) + 50,enemy.getPosition().y - (rand() % 50) + 50 });
+					enemy.setNewPos({ enemy.getPosition().x - ((rand() % 400) + 50),enemy.getPosition().y - ((rand() % 400) + 50 )});
 					enemy.setIsMoving(true);
 				}
 
 			}
 		}
-		enemy.setVelocity( { (enemy.getNewPos().x - enemy.getPosition().x) , (enemy.getNewPos().y - enemy.getPosition().y)});
+		enemy.setSpeedVector({ (enemy.getNewPos().x - enemy.getPosition().x) , (enemy.getNewPos().y - enemy.getPosition().y) });
+		if (enemy.getSpeedVector().x > enemy.getTopSpeed())
+		{
+			enemy.setSpeedVector({enemy.getTopSpeed(),enemy.getSpeedVector().y });
+		}
+		else if (enemy.getSpeedVector().x < -(enemy.getTopSpeed()))
+		{
+			enemy.setSpeedVector({-enemy.getTopSpeed(), enemy.getSpeedVector().y });
+		}
+		if (enemy.getSpeedVector().y > enemy.getTopSpeed())
+		{
+			enemy.setSpeedVector({ enemy.getSpeedVector().x, enemy.getTopSpeed() });
+		}
+		else if (enemy.getSpeedVector().y < -(enemy.getTopSpeed()))
+		{
+			enemy.setSpeedVector({ enemy.getSpeedVector().x, -enemy.getTopSpeed() });
+		}
+		enemy.setVelocity(enemy.getSpeedVector());
 		enemy.setDistToGoal(std::sqrt((enemy.getNewPos().x - enemy.getPosition().x) * (enemy.getNewPos().x - enemy.getPosition().x) +
 			(enemy.getNewPos().y - enemy.getPosition().y) * (enemy.getNewPos().y - enemy.getPosition().y)));
 		if (enemy.getDistToGoal() < 20)

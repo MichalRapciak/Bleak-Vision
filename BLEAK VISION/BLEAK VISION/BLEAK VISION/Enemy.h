@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Entity.h"
 
+class Level;
+
 /// <summary>
 /// This class is in charge of Enemy Data
 /// </summary>
@@ -22,12 +24,12 @@ public:
 	sf::Vector2f getEnemyAim() { return m_enemyAim; }
 
 	float getHealth() const override { return m_enemyHealth; }
-	sf::FloatRect getBoundingBox() const override { return m_enemySprite.getGlobalBounds(); }
-	void takeDamage(float amount) override { m_enemyHealth -= amount; std::cout << "enemy hit for " << amount << " damage!\n"; }
+	sf::FloatRect getBoundingBox() const override { return sf::FloatRect({ m_enemyPosition.x - 25,m_enemyPosition.y - 25 }, { 50,50 }); }
+	void takeDamage(float amount) override { m_enemyHealth -= amount; /*std::cout << "enemy hit for " << amount << " damage!\n";*/ }
 
 	void setEnemyAim(sf::Vector2f t_mousePos) { m_enemyAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_playerPos, float facingDir);
-	void update(float dt);
+	void update(float dt, Level& level);
 	bool getIsMoving() { return isMoving; }
 	sf::Vector2f getFacingDir() { return m_facingDirection; }
 	sf::Vector2f getNewPos() { return m_newPos; }
@@ -40,7 +42,12 @@ public:
 	void setDistToGoal(float t_distToGoal) { m_distanceFromGoal = t_distToGoal; }
 	bool getDead() { return isDead; }
 	void setDead(bool t_dead) { isDead = t_dead; }
+	float getTopSpeed() { return m_enemyTopSpeed; }
+	sf::Vector2f getSpeedVector() { return m_speedVector; }
+	void setSpeedVector(sf::Vector2f t_vector) { m_speedVector = t_vector; }
 
+	void moveWithCollisions(sf::Vector2f movement, Level& level);
+	void moveAxis(float dx, float dy, Level& level);
 
 
 private:
@@ -58,5 +65,8 @@ private:
 	sf::Vector2f m_newPos{ 0,0 }; // New enemy position after speed vector is added on
 	float m_playerDistance = 0.0f;
 	float m_distanceFromGoal = 0.0f;
+	sf::Vector2f m_enemyMovement;
+	sf::Vector2f m_speedVector{ 0,0 }; // Current speed vector
+	float m_enemyTopSpeed = 90;
 
 };

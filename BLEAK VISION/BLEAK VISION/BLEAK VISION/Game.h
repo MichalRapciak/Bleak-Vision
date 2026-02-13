@@ -20,6 +20,8 @@ public:
 	~Game();
 	void run();
 	void spawnProjectile(Entity* shooter, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range, int txt);
+	int getEnemyCount() { return m_enemies.size(); };
+	void spawnEnemy(sf::Vector2f t_pos);
 
 private:
 	sf::RenderWindow m_window; // main SFML window
@@ -40,7 +42,7 @@ private:
 	sf::Texture m_mProjTxt;
 	sf::Texture m_LProjTxt;
 
-	void setupPlayer();
+	void setupGame();
 	void processEvents();
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);

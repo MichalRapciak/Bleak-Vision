@@ -7,6 +7,7 @@
 
 class Weapon;
 class Game;
+class Level;
 
 class Player : public Entity
 {
@@ -26,25 +27,28 @@ public:
 	float getTopSpeed() { return m_playerTopSpeed; }
 	float getSprintSpeed() { return m_playerSprintSpeed; }
 	float getHealth() const override { return m_playerHealth; }
-	sf::FloatRect getBoundingBox() const override { return m_playerSprite.getGlobalBounds(); }
+	sf::FloatRect getBoundingBox() const override { return sf::FloatRect({ m_playerPosition.x - 25,m_playerPosition.y - 25 }, { 50,50 }); }
 	void takeDamage(float amount) override { m_playerHealth -= amount; }
 	sf::Vector2f getPlayerAim() { return m_playerAim; }
 	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_mousePos, float facingDir);
-	void update(float dt);
+	void update(float dt, Level& level);
 	void shooting(float dt, Game& game);
 	void equipWeapon(weaponType t_weaponType);
 	sf::Sprite getWeaponSprite() { return m_weaponSprite; }
-	//Weapon* getWeapon() const { if (m_weapon) { return m_weapon.get(); } else {} }
+	//Weapon* getWeapon() const { if (m_weapon) { return m_weapon.get(); } else {} } // This is to get the debug box for melee attack area
+	void moveWithCollisions(sf::Vector2f movement, Level& level);
+	void moveAxis(float dx, float dy, Level& level);
 	
 
 private:
 	sf::Sprite m_playerSprite;
 	sf::Texture m_playerTexture;
 	sf::Vector2f m_playerPosition;
-	float m_playerSpeed = 15;
-	float m_playerTopSpeed = 80;
-	float m_playerSprintSpeed = 160;
+	sf::Vector2f m_playerMovement;
+	float m_playerSpeed = 25;
+	float m_playerTopSpeed = 100;
+	float m_playerSprintSpeed = 240;
 	sf::Vector2f m_playerVelocity{ 0.0,0.0 };
 	sf::Vector2f m_playerAim{ 0, 0 }; // coordinates where player is aiming
 	float m_playerHealth = 0;

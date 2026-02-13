@@ -5,7 +5,7 @@ class Melee : public Weapon
 {
 public:
 	Melee() : Weapon(0.5f) { // the 0.5 is the default cooldown. I can't initialize it here since it would not be able to read it in time, it will be initialized in a separate class later
-		if (m_weaponTxt.loadFromFile("ASSETS/WEAPON/sProjPlaceholder.png"))
+		if (m_weaponTxt.loadFromFile("ASSETS/WEAPON/meleePlaceholder.png"))
 		{
 		}
 	}

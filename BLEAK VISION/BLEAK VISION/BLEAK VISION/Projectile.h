@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "HitInfo.h"
 
+class Level;
+
 class Projectile : public Entity
 {
 public:
@@ -15,12 +17,12 @@ public:
 		float range);
 	~Projectile();
 
-	void update(float dt);
+	void update(float dt, Level& level);
 	void setPosition(sf::Vector2f t_position) { m_position = t_position; }
 	void move(sf::Vector2f t_pos);
 
 	bool getDead() const { return m_isDead; }
-	int getDamage() const { return m_damage; }
+	float getDamage() const { return m_damage; }
 	sf::Vector2f getPosition() { return m_position; }
 	void setDead() { m_isDead = true; }
 
