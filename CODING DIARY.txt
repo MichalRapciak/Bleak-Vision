@@ -55,3 +55,4 @@ Added random enemy spawning in areas of the map
 13/2/2026
 Upon testing game .exe, found out it doesn't work in release mode.
 Rebuilt SFML from scratch and cleaned up the project in order to have it seamlessly working between Debug and Release in the future.
+Rewrote the game to include different menus/game screens to allow for menus later.

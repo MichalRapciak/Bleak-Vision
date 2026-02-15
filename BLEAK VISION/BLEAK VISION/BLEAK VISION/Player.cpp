@@ -22,6 +22,12 @@ Player::Player() : m_playerSprite(m_playerTexture), m_weaponSprite(m_weaponTxt)
 	m_playerSprite.setScale({ 0.3f,0.3f });
 	m_playerSprite.setPosition(m_playerPosition);
 	m_playerHealth = 20;
+	// Default stats for weapons
+	m_meleeStats = {0.5f, 0.f, 10.f, 150.f}; // cooldown - speed - damage - range
+	m_shortStats = {0.15f, 600.f, 8.f , 400.f};
+	m_mediumStats = {0.40f, 900.f, 16.f, 800.f};
+	m_longStats = {1.0f, 1600.f, 32.f, 2400.f};
+
 }
 
 Player::~Player()
@@ -66,7 +72,7 @@ void Player::updateAim(sf::Vector2f t_mousePos, float facingDir)
 /// This function is in charge of shooting
 /// </summary>
 /// <param name="dt"></param>
-void Player::shooting(float dt, Game& game)
+void Player::shooting(float dt, GamePlay& game)
 {
 	if (m_weapon) //if holding a weapon, try shoot. This line is necessary since if the player tries to shoot with no weapon active, the function points to null and crashes the game.
 	{
@@ -87,19 +93,19 @@ void Player::equipWeapon(weaponType t_weaponType)
 	{
 		if (t_weaponType == weaponType::melee) // If you select a melee weapon
 		{
-			m_weapon = std::make_unique<Melee>(); // Creates Melee Weapon instance
+			m_weapon = std::make_unique<Melee>(&m_meleeStats); // Creates Melee Weapon instance
 		}
 		else if (t_weaponType == weaponType::short_range) // If you select a melee weapon
 		{
-			m_weapon = std::make_unique<ShortRange>();
+			m_weapon = std::make_unique<ShortRange>(&m_shortStats);
 		}
 		else if (t_weaponType == weaponType::medium_range)
 		{
-			m_weapon = std::make_unique<MediumRange>();
+			m_weapon = std::make_unique<MediumRange>(&m_mediumStats);
 		}
 		else if (t_weaponType == weaponType::long_range)
 		{
-			m_weapon = std::make_unique<LongRange>();
+			m_weapon = std::make_unique<LongRange>(&m_longStats);
 		}
 		m_weaponSprite.setTexture(m_weapon->getTxt()); // Takes texture of current weapon (in this case melee in the melee class)
 		sf::Vector2i txtSize = { (int)m_weaponSprite.getTexture().getSize().x, (int)m_weaponSprite.getTexture().getSize().y }; // gets the size of the texture

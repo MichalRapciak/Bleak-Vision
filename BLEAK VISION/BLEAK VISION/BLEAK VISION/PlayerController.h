@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 class Player; // I call this class here so the PlayerController knows to expect a player when it's loaded, without having to load the class here.
-class Game;
+class GamePlay;
 
 /// <summary>
 /// This class is in charge of all the calculations depending on player movement and aiming, letting the player class be less bloated
@@ -14,7 +14,7 @@ public:
 	~PlayerController();
 
 	void inputHandler(const sf::Event t_event);
-	void update(float dt, Game& game);
+	void update(float dt, GamePlay& game);
 	void mouseAiming(sf::Vector2f t_mouseWorld);
 
 private:

@@ -1,102 +1,111 @@
 #include "Game.h"
+#include <iostream>
 
+GameState Game::currentState = GameState::License;
+
+/// <summary>
+/// default constructor
+/// setup the window properties
+/// load and setup the text 
+/// load and setup thne image
+/// </summary>
 Game::Game() :
-	m_window(sf::VideoMode({ 1920U, 1080U }), "BLEAK VISION"), // Main Window
-	m_exitGame{ false } // Closing Window
+	m_window{ sf::VideoMode({ 1920U, 1080U }), "BLEAK VISION" },
+	m_exitGame{ false } //when true game will exit
+
 {
-	setupGame();
-	m_playerCam.setCenter(m_player->getPosition());
-	m_playerCam.zoom(1.5f);
-	m_playerCam.setSize({ 1920,1080 });
+	initialiseStates();
 }
 
+/// <summary>
+/// default destructor we didn't dynamically allocate anything
+/// so we don't need to free it, but mthod needs to be here
+/// </summary>
 Game::~Game()
 {
 }
 
 /// <summary>
-/// Main Game Loop
-/// Update 60 times per second
-/// Double check to process updates as often as possible, and at least 60 times per second
-/// Draw constantly but only update on time
-/// If updates run slow then don't render frames
+/// main game loop
+/// update 60 times per second,
+/// process update as often as possible and at least 60 times per second
+/// draw as often as possible but only updates are on time
+/// if updates run slow then don't render frames
+/// </summary>
 void Game::run()
 {
 	sf::Clock gameClock;
-	sf::Time timeSinceLastUpdate = sf::Time::Zero; // set up game clock and time between frames
-	const float fps{ 75.0f }; // 75 FPS is ideal
-	sf::Time timePerFrame = sf::seconds(1.0f / fps); //how many seconds = 1fps
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	const float fps{ 75.0f };
+	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 70 fps
 	while (m_window.isOpen())
 	{
-		processEvents(); // Process controls as often as possible
+		processEvents(); // as many as possible
 		timeSinceLastUpdate += gameClock.restart();
 		while (timeSinceLastUpdate > timePerFrame)
 		{
 			timeSinceLastUpdate -= timePerFrame;
-			processEvents(); // Process events at least 60fps
-			update(timePerFrame);
+			processEvents(); // at least 75 fps
+			update(timePerFrame); //75 fps
 		}
-		render(); // Render as often as possible
+		render(); // as many as possible
 	}
 }
-
 /// <summary>
-/// handle user and system events / inputs
-/// get key pressed, mouse moves etc. from OS
-/// do NOT do game update here
+/// handle user and system events/ input
+/// get key presses/ mouse moves etc. from OS
+/// and user :: Don't do game update here
 /// </summary>
 void Game::processEvents()
 {
-	//sf::Event event();
-	while (const auto event = m_window.pollEvent())
+	while (auto event = m_window.pollEvent())
 	{
 		if (event->is<sf::Event::Closed>())
-			m_window.close();
-		else if (const auto resized = event->getIf<sf::Event::Resized>()) //debugging to see if window resizing works
+				m_window.close();
+		switch (currentState)
 		{
-			sf::Vector2f visibleArea(sf::Vector2f(resized->size));
-			m_playerCam.setSize(visibleArea);
-		}
-		if(const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) //user pressed a key
-		{
-			processKeys(*event);
-			m_playerController->inputHandler(*event);
-		}
-		if(const auto keyReleased = event->getIf<sf::Event::KeyReleased>())
-		{
-			m_playerController->inputHandler(*event);
-		}
-		if (const auto buttonPressed = event->getIf<sf::Event::MouseButtonPressed>())
-		{
-			m_playerController->inputHandler(*event);
-		}
-		if (const auto buttonReleased = event->getIf<sf::Event::MouseButtonReleased>())
-		{
-			m_playerController->inputHandler(*event);
+		case GameState::None:
+			break;
+		case GameState::License:
+			//no process events in license
+			break;
+		case GameState::Splash:
+			m_splashScreen.processInput(*event);
+			break;
+		case GameState::MainMenu:
+			//no event processing method except for update
+			break;
+		case GameState::Help:
+			m_helpScreen.processInput(*event);
+			break;
+		case GameState::GamePlay:
+			m_gamingScreen.processEvents(*event,m_window);
+			break;
+		default:
+			break;
 		}
 	}
+	
 }
 
+
 /// <summary>
-/// This function processes all keyboard presses and performs the correct action
+/// deal with key presses from the user
 /// </summary>
 /// <param name="t_event">key press event</param>
 void Game::processKeys(sf::Event t_event)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LAlt))
 	{
-		m_exitGame = true;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G))
-	{
-		auto newEnemy = std::make_unique<Enemy>();
-		m_enemies.push_back(std::move(newEnemy));
-		refreshEntities();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F4))
+		{
+			m_exitGame = true;
+		}
 	}
 }
 
 /// <summary>
-/// Updates the Game World
+/// Update the game world
 /// </summary>
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
@@ -105,144 +114,69 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
-	m_enemyController->aimAtPlayer(m_player->getPosition());
-	m_enemyController->movementAI();
-	mouseWorld = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)); // This gets mouse position in the world, depending on camera/view
-	m_playerController->update(t_deltaTime.asSeconds(),*this);
-	m_playerController->mouseAiming(mouseWorld);
-	m_player->update(t_deltaTime.asSeconds(),m_level1);
-	m_level1.spawnEnemies(*this);
-	for (auto& enemy : m_enemies)
+
+	switch (currentState)
 	{
-		enemy->update(t_deltaTime.asSeconds(), m_level1);
+	case GameState::None:
+		break;
+	case GameState::License:
+		m_licenseScreen.update(t_deltaTime);
+		break;
+	case GameState::Splash:
+		m_splashScreen.update(t_deltaTime);
+		break;
+	case GameState::MainMenu:
+		m_mainMenuScreen.update(t_deltaTime, m_window);
+		break;
+	case GameState::Help:
+		m_helpScreen.update(t_deltaTime);
+		break;
+	case GameState::GamePlay:
+		m_gamingScreen.update(t_deltaTime, m_window);
+	default:
+		break;
 	}
-	for (auto& projectile : m_projectiles)
-	{
-		projectile->update(t_deltaTime.asSeconds(), m_level1);
-	}
-	refreshEntities();
-	Collisions::getInstance().update(m_entities);
-	m_window.setView(m_playerCam); // Set Camera to player camera
-	m_playerCam.setCenter({ (m_player->getPosition().x),(m_player->getPosition().y) }); // Center player camera to the player
 }
 
 /// <summary>
-/// Draw Frames and Switch Buffers
+/// draw the frame and then switch buffers
 /// </summary>
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
-	m_window.draw(m_level1.getLevelBG());
-	m_window.draw(m_player->getSprite());
-	m_window.draw(m_player->getWeaponSprite());
-	for (auto& enemy : m_enemies)
+	switch (currentState)
 	{
-		m_window.draw(enemy->getSprite());
+	case GameState::None:
+		break;
+	case GameState::License:
+		m_licenseScreen.render(m_window);
+		break;
+	case GameState::Splash:
+		m_splashScreen.render(m_window);
+		break;
+	case GameState::MainMenu:
+		m_mainMenuScreen.render(m_window);
+		break;
+	case GameState::Help:
+		m_helpScreen.render(m_window);
+		break;
+	case GameState::GamePlay:
+		m_gamingScreen.render(m_window);
+	default:
+		break;
 	}
-	for (auto& projectile : m_projectiles)
-	{
-		m_window.draw(projectile->getSprite());
-	}
-	/* This is used to draw the debug box around melee attack area
-	if (m_player->getWeapon()) {  // check pointer
-		m_window.draw(m_player->getWeapon()->getDebugBox());
-	}
-	*/
 	m_window.display();
 }
 
-/// <summary>
-/// Setting player up, temporarily setting up enemies
-/// </summary>
-void Game::setupGame()
+void Game::initialiseStates()
 {
-	m_player = std::make_unique<Player>();
-	m_entities.push_back(m_player.get());
-	m_playerController = std::make_unique<PlayerController>(*m_player);
-	auto newEnemy = std::make_unique<Enemy>();
-	Entity* entityPtr = newEnemy.get();
-	m_entities.push_back(entityPtr);
-	m_enemies.push_back(std::move(newEnemy));
-	m_enemyController = std::make_unique<EnemyController>(m_enemies);
-	if (!m_sProjTxt.loadFromFile("ASSETS/WEAPON/sProjPlaceholder.png"))
+	if (!m_font.openFromFile("ASSETS\\FONTS\\ariblk.ttf"))
 	{
-		std::cout << "Error loading Small Projectile Texture\n";
+		std::cout << "problem loading arial black font" << std::endl;
 	}
-	if (!m_mProjTxt.loadFromFile("ASSETS/WEAPON/mProjPlaceholder.png"))
-	{
-		std::cout << "Error loading Medium Projectile Texture\n";
-	}
-	if (!m_LProjTxt.loadFromFile("ASSETS/WEAPON/LProjPlaceholder.png"))
-	{
-		std::cout << "Error loading Large Projectile Texture\n";
-	}
+	m_licenseScreen.initialise(m_font);
+	m_splashScreen.initialise(m_font);
+	m_mainMenuScreen.initialise(m_font);
+	m_helpScreen.initialise(m_font);
 }
 
-/// <summary>
-/// Function in charge of deleting dead enemies and entities and updating their vectors
-/// </summary>
-void Game::refreshEntities()
-{
-	m_entities.clear();
-	m_enemies.erase // erase enemies from remove_if's new end point to the old end point of the vector
-	(
-		std::remove_if // this function gives erase a new end point to the vector by moving "enemy dead" returns to the end of the vector
-		(
-			m_enemies.begin(), //from the start of the vector
-			m_enemies.end(), // to the end of the vector
-			[](const std::unique_ptr<Enemy>& e)
-			{
-				return e->getDead(); // an enemy returns as dead
-			}
-		),
-		m_enemies.end() // the current end point of the vector
-	);
-	m_projectiles.erase // same as enemies, clears dead projectiles
-	(
-		std::remove_if
-		(
-			m_projectiles.begin(),
-			m_projectiles.end(),
-			[](const std::unique_ptr<Projectile>& p)
-			{
-				return p->getDead();
-			}
-		),
-		m_projectiles.end()
-	);
-	if (m_player)
-	{
-		m_entities.push_back(m_player.get());
-	}
-	for (auto& enemy : m_enemies)
-	{
-		m_entities.push_back(enemy.get());
-	}
-	for (auto& projectiles : m_projectiles)
-	{
-		m_entities.push_back(projectiles.get());
-	}
-}
-void Game::spawnProjectile(Entity* shooter, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range, int txt)
-{
-	if (txt == 1)
-	{
-		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_sProjTxt, position, direction, speed, damage, range));
-	}
-	if (txt == 2)
-	{
-		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_mProjTxt, position, direction, speed, damage, range));
-	}
-	if (txt == 3)
-	{
-		m_projectiles.push_back(std::make_unique<Projectile>(shooter, m_LProjTxt, position, direction, speed, damage, range));
-	}
-}
-
-void Game::spawnEnemy(sf::Vector2f t_pos)
-{
-	auto newEnemy = std::make_unique<Enemy>();
-	newEnemy->setPosition(t_pos);
-	m_enemies.push_back(std::move(newEnemy));
-	refreshEntities();
-}

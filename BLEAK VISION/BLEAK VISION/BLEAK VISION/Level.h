@@ -2,7 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include <math.h>
 
-class Game;
+class GamePlay;
 
 enum class Tile {
 	Floor,
@@ -24,7 +24,7 @@ public:
 	void initialiseMap();
 	int returnTile(sf::Vector2f t_Pos);
 	bool isSolid(sf::Vector2i t_pos);
-	void spawnEnemies(Game& game);
+	void spawnEnemies(GamePlay& game);
 
 	sf::Sprite getLevelBG() { return m_levelBG; }
 

@@ -1,31 +1,14 @@
-﻿  Enemy.cpp
-  EnemyController.cpp
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\EnemyController.cpp(8,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Game.cpp
+﻿  Game.cpp
+  GamePlay.cpp
+  Help.cpp
   Level.cpp
 C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(12,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(55,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(55,12): warning C4244:         with
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(55,12): warning C4244:         [
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(55,12): warning C4244:             T=float
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(55,12): warning C4244:         ]
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(56,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(56,12): warning C4244:         with
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(56,12): warning C4244:         [
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(56,12): warning C4244:             T=float
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(56,12): warning C4244:         ]
+  LicenseScreen.cpp
   LongRange.cpp
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\LongRange.cpp(11,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  main.cpp
+  MainMenu.cpp
   MediumRange.cpp
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\MediumRange.cpp(11,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Melee.cpp
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Melee.cpp(11,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Player.cpp
-  PlayerController.cpp
-  Projectile.cpp
   ShortRange.cpp
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\ShortRange.cpp(11,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Weapon.cpp
+  SplashScreen.cpp
+  main.cpp
   Generating Code...
   BLEAK VISION.vcxproj -> C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\Debug\BLEAK VISION.exe

@@ -93,7 +93,7 @@ void PlayerController::inputHandler(const sf::Event t_event)
 /// updating player movement - can be turned off if within menus.
 /// </summary>
 /// <param name="isPressed"></param>
-void PlayerController::update(float dt, Game& game)
+void PlayerController::update(float dt, GamePlay& game)
 {
 	if (m_up) // these 4 statements set player velocity in given direction
 	{

@@ -3,10 +3,11 @@
 #include "WeaponType.h"
 #include <iostream>
 #include "Entity.h"
+#include "WeaponStats.h"
 #include <memory>
 
 class Weapon;
-class Game;
+class GamePlay;
 class Level;
 
 class Player : public Entity
@@ -33,13 +34,17 @@ public:
 	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_mousePos, float facingDir);
 	void update(float dt, Level& level);
-	void shooting(float dt, Game& game);
+	void shooting(float dt, GamePlay& game);
 	void equipWeapon(weaponType t_weaponType);
 	sf::Sprite getWeaponSprite() { return m_weaponSprite; }
 	//Weapon* getWeapon() const { if (m_weapon) { return m_weapon.get(); } else {} } // This is to get the debug box for melee attack area
 	void moveWithCollisions(sf::Vector2f movement, Level& level);
 	void moveAxis(float dx, float dy, Level& level);
 	
+	WeaponStats m_meleeStats;
+	WeaponStats m_shortStats;
+	WeaponStats m_mediumStats;
+	WeaponStats m_longStats;
 
 private:
 	sf::Sprite m_playerSprite;

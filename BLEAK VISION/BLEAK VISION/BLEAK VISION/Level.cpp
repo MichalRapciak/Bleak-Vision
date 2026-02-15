@@ -2,7 +2,7 @@
 #include "Player.h"
 #include <iostream>
 #include <fstream>
-#include "Game.h"
+#include "GamePlay.h"
 #include <random>
 
 Level::Level() : m_levelBG(m_levelTXT)
@@ -52,8 +52,8 @@ void Level::initialiseArrays()
 /// <returns></returns>
 int Level::returnTile(sf::Vector2f t_pos)
 {
-	int xTile = t_pos.x / 100; // Current position is divided by 100 as 1 tile = 100 pixels
-	int yTile = t_pos.y / 100;
+	int xTile = static_cast<int>(t_pos.x / 100); // Current position is divided by 100 as 1 tile = 100 pixels
+	int yTile = static_cast<int>(t_pos.y / 100);
 	tile = levelGrid1[yTile][xTile];
 	return tile;
 }
@@ -71,9 +71,9 @@ bool Level::isSolid(sf::Vector2i t_pos)
 	}
 }
 
-void Level::spawnEnemies(Game& game)
+void Level::spawnEnemies(GamePlay& game)
 {
-	if (game.getEnemyCount() < 100)
+	if (game.getEnemyCount() < 40)
 	{
 		for (int y = 0; y != Y_BOXES; y++)
 		{
