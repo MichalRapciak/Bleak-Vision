@@ -1,14 +1,4 @@
-﻿  Game.cpp
-  GamePlay.cpp
-  Help.cpp
-  Level.cpp
-C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\BLEAK VISION\Level.cpp(12,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  LicenseScreen.cpp
-  LongRange.cpp
-  MainMenu.cpp
-  MediumRange.cpp
-  ShortRange.cpp
-  SplashScreen.cpp
-  main.cpp
+﻿  GamePlay.cpp
+  SkillTree.cpp
   Generating Code...
   BLEAK VISION.vcxproj -> C:\Users\micha\Desktop\BLEAK VISION\Bleak-Vision\BLEAK VISION\BLEAK VISION\Debug\BLEAK VISION.exe

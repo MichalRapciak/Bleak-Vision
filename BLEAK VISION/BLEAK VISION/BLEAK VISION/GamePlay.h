@@ -19,10 +19,18 @@ public:
 	void processKeys(sf::Event t_event);
 	void update(sf::Time& t_deltaTime, sf::RenderWindow& t_window);
 	void render(sf::RenderWindow& t_window);
+	void initialise(sf::Font& t_font);
 
 	void spawnProjectile(Entity* shooter, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range, int txt);
 	int getEnemyCount() { return m_enemies.size(); };
 	void spawnEnemy(sf::Vector2f t_pos);
+	Player& getPlayer() { return *m_player; }
+
+
+
+protected:
+	sf::Font m_font;
+	sf::Text m_pauseText;
 
 private:
 	bool m_pause = false;

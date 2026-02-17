@@ -6,6 +6,7 @@
 #include "SplashScreen.h"
 #include "MainMenu.h"
 #include "Help.h"
+#include "SkillTree.h"
 //#include "Player.h"
 //#include "Enemy.h"
 //#include "Level.h"
@@ -18,7 +19,8 @@ enum class
 	Splash,
 	MainMenu,
 	Help,
-	GamePlay
+	GamePlay,
+	SkillTree
 };
 
 
@@ -51,6 +53,7 @@ private:
 	MainMenu m_mainMenuScreen;
 	Help m_helpScreen;
 	GamePlay m_gamingScreen;
+	SkillTree m_skillTree;
 
 	bool m_exitGame; // control exiting game
 

@@ -3,10 +3,10 @@
 
 struct WeaponStats
 {
-	float cooldown; // cooldown between weapon shots/hits (fireRate), in seconds
-	float projectileSpeed; // speed of projectile sent by the weapon
-	float damage; // damage of the projectile/hit by the weapon
-	float range; // range of the projectile/hit by the weapon
+	float cooldown = 0; // cooldown between weapon shots/hits (fireRate), in seconds
+	float projectileSpeed = 0; // speed of projectile sent by the weapon
+	float damage = 0; // damage of the projectile/hit by the weapon
+	float range = 0; // range of the projectile/hit by the weapon
 
 	StatModifier cooldownMod;
 	StatModifier projMod;

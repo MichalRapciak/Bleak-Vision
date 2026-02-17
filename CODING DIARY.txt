@@ -56,3 +56,7 @@ Added random enemy spawning in areas of the map
 Upon testing game .exe, found out it doesn't work in release mode.
 Rebuilt SFML from scratch and cleaned up the project in order to have it seamlessly working between Debug and Release in the future.
 Rewrote the game to include different menus/game screens to allow for menus later.
+16/2/2026
+Rewrote Upgrade Code to be more efficient
+Wrote Skills Tree Menu, Weapon Upgrades Menu and Player Upgrades menu
+Wrote Player Upgrades System

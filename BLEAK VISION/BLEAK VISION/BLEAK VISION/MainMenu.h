@@ -7,11 +7,12 @@ public:
 	~MainMenu();
 
 	void initialise(sf::Font& t_font);
-	void update(sf::Time& t_deltaTime, sf::Window& t_window);
+	void processInput(sf::Event& t_event, sf::RenderWindow& t_window);
+	void update(sf::Time& t_deltaTime, sf::RenderWindow& t_window);
 	void render(sf::RenderWindow& t_window);
 
 protected:
-	
+	sf::View m_mainMenuView;
 	static const int m_buttonCount = 3;
 	sf::Texture m_buttonTxt;
 	std::vector<sf::Sprite> m_buttonSprite;

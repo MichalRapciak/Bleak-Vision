@@ -1,7 +1,7 @@
 #include "GamePlay.h"
 #include "Game.h"
 
-GamePlay::GamePlay()
+GamePlay::GamePlay() : m_pauseText(m_font)
 {
 	setupGame();
 	m_playerCam.setCenter(m_player->getPosition());
@@ -11,6 +11,21 @@ GamePlay::GamePlay()
 
 GamePlay::~GamePlay()
 {
+}
+
+void GamePlay::initialise(sf::Font& t_font)
+{
+	m_font = t_font;
+	m_pauseText.setFont(m_font); // Text seen on the screen
+	m_pauseText.setString("Game Paused - Press Space to Skill Tree");
+	m_pauseText.setCharacterSize(42);
+	m_pauseText.setFillColor(sf::Color::Red);
+	m_pauseText.setStyle(sf::Text::Bold);
+
+	sf::FloatRect textSize = m_pauseText.getGlobalBounds(); // will be used to put the text in the middle
+	float xpos = (1920 / 2) - (textSize.size.x / 2);
+	m_pauseText.setPosition({ xpos, 1080 * 0.5f });
+
 }
 
 /// <summary>
@@ -67,6 +82,13 @@ void GamePlay::processKeys(sf::Event t_event)
 		m_enemies.push_back(std::move(newEnemy));
 		refreshEntities();
 	}
+	if (m_pause)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+		{
+			Game::currentState = GameState::SkillTree;
+		}
+	}
 }
 
 /// <summary>
@@ -86,7 +108,7 @@ void GamePlay::update(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
 		m_level1.spawnEnemies(*this);
 		for (auto& enemy : m_enemies)
 		{
-			enemy->update(t_deltaTime.asSeconds(), m_level1);
+			enemy->update(t_deltaTime.asSeconds(), m_level1, *m_player);
 		}
 		for (auto& projectile : m_projectiles)
 		{
@@ -122,11 +144,12 @@ void GamePlay::render(sf::RenderWindow& t_window)
 	*/
 	if (m_pause)
 	{
+		t_window.setView(t_window.getDefaultView());
 		sf::RectangleShape overlay;
 		overlay.setSize(sf::Vector2f(t_window.getSize()));
 		overlay.setFillColor(sf::Color(100, 100, 100, 150));
-		t_window.setView(t_window.getDefaultView());
 		t_window.draw(overlay);
+		t_window.draw(m_pauseText);
 		t_window.setView(m_playerCam);
 	}
 }

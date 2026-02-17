@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Level.h"
+#include "Player.h"
 
 Enemy::Enemy() : m_enemySprite(m_enemyTexture)
 {
@@ -27,12 +28,13 @@ Enemy::~Enemy()
 /// Function used to update player position
 /// </summary>
 /// <param name="dt"></param>
-void Enemy::update(float dt, Level& level)
+void Enemy::update(float dt, Level& level, Player& player)
 {
 	if (!isDead)
 	{
 		if (m_enemyHealth <= 0)
 		{
+			player.addSoul();
 			isDead = true;
 		}
 		m_enemyMovement = m_enemyVelocity * dt; // Multiply by delta time - time between frames - to make sure movement is always at constant speed

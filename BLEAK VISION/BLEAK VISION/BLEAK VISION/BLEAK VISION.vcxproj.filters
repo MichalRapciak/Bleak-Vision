@@ -69,6 +69,9 @@
     <ClCompile Include="SplashScreen.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="SkillTree.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GamePlay.h">
@@ -143,7 +146,25 @@
     <ClInclude Include="SplashScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UpgradeLevels.h">
+    <ClInclude Include="WeaponUpgradeLevels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponUpgradeType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpgradeType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpgradeLevels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpgrades.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

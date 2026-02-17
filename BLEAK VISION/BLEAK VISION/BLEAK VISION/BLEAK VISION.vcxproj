@@ -159,6 +159,7 @@
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ShortRange.cpp" />
+    <ClCompile Include="SkillTree.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -179,11 +180,17 @@
     <ClInclude Include="Melee.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="PlayerStats.h" />
+    <ClInclude Include="PlayerUpgradeLevels.h" />
+    <ClInclude Include="PlayerUpgrades.h" />
+    <ClInclude Include="PlayerUpgradeType.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ShortRange.h" />
+    <ClInclude Include="SkillTree.h" />
     <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="StatModifiers.h" />
-    <ClInclude Include="UpgradeLevels.h" />
+    <ClInclude Include="WeaponUpgradeLevels.h" />
+    <ClInclude Include="WeaponUpgradeType.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponStats.h" />
     <ClInclude Include="WeaponType.h" />

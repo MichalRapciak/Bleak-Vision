@@ -4,6 +4,7 @@
 #include "Entity.h"
 
 class Level;
+class Player;
 
 /// <summary>
 /// This class is in charge of Enemy Data
@@ -29,7 +30,7 @@ public:
 
 	void setEnemyAim(sf::Vector2f t_mousePos) { m_enemyAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_playerPos, float facingDir);
-	void update(float dt, Level& level);
+	void update(float dt, Level& level, Player& player);
 	bool getIsMoving() { return isMoving; }
 	sf::Vector2f getFacingDir() { return m_facingDirection; }
 	sf::Vector2f getNewPos() { return m_newPos; }

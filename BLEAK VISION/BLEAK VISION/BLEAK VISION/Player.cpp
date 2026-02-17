@@ -27,7 +27,8 @@ Player::Player() : m_playerSprite(m_playerTexture), m_weaponSprite(m_weaponTxt)
 	m_shortStats = {0.15f, 600.f, 8.f , 400.f};
 	m_mediumStats = {0.40f, 900.f, 16.f, 800.f};
 	m_longStats = {1.0f, 1600.f, 32.f, 2400.f};
-
+	m_playerStats = { 20.0f,100.0f, 240.0f,25.0f, 0.0f }; // health, walk speed, sprint speed, accel, regen
+	m_playerHealth = m_playerStats.getHealth();
 }
 
 Player::~Player()
@@ -43,6 +44,7 @@ void Player::update(float dt, Level& level)
 	if (!isDead)
 	{
 		m_playerMovement = m_playerVelocity * dt; // Multiply by delta time - time between frames - to make sure movement is always at constant speed
+		m_playerHealth += m_playerStats.getRegen() * dt;
 		moveWithCollisions(m_playerMovement, level);
 		m_playerSprite.setPosition(m_playerPosition);
 		if (m_weapon) // if a weapon is created, keep it glued to the player
@@ -198,4 +200,37 @@ void Player::moveAxis(float dx, float dy, Level& level)
 			}
 		}
 	}
+}
+
+void Player::tryBuyWeaponUpgrade(WeaponUpgradeType t_type, weaponType t_weapon)
+{
+	int cost = m_weaponUpgrades.getCost(t_type,t_weapon);
+	if (cost > m_playerSouls)
+	{
+		return;
+	}
+	m_playerSouls -= cost;
+	m_weaponUpgrades.levelUp(t_type, t_weapon);
+	recalculateStats();
+}
+
+void Player::tryBuyPlayerUpgrade(PlayerUpgradeType t_type)
+{
+	int cost = m_playerUpgrades.getCost(t_type);
+	if (cost > m_playerSouls)
+	{
+		return;
+	}
+	m_playerSouls -= cost;
+	m_playerUpgrades.levelUp(t_type);
+	recalculateStats();
+}
+
+void Player::recalculateStats()
+{
+	m_playerUpgrades.applyPlayerUpgrades(m_playerStats); 
+	m_weaponUpgrades.ApplyUpgrades(m_meleeStats, weaponType::melee);
+	m_weaponUpgrades.ApplyUpgrades(m_shortStats, weaponType::short_range);
+	m_weaponUpgrades.ApplyUpgrades(m_mediumStats, weaponType::medium_range);
+	m_weaponUpgrades.ApplyUpgrades(m_longStats, weaponType::long_range);
 }

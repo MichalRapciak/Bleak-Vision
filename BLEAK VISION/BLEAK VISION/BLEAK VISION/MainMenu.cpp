@@ -3,7 +3,7 @@
 #include "GamePlay.h"
 #include <iostream>
 
-MainMenu::MainMenu()
+MainMenu::MainMenu() : m_mainMenuView(sf::FloatRect({0,0},{1920,1080}))
 {
 
 }
@@ -14,24 +14,29 @@ MainMenu::~MainMenu()
 
 void MainMenu::initialise(sf::Font& t_font)
 {
-	m_yOffset = 200;
-	m_xOffset = (1920 / 2) - m_buttonWidth - 150;
-	m_buttonSpacing = 120;
 	m_buttonWidth = 300;
 	m_buttonHeight = 100;
+	m_yOffset = 200;
+	m_xOffset = (m_mainMenuView.getSize().x / 2) - m_buttonWidth / 2;
+	m_buttonSpacing = 120;
 	int textDropOffset = 15;
 	sf::String m_Texts[] = { "Start Game", "Controls", "Exit Game" };
 
 	m_font = t_font;
 
-	if (!m_buttonTxt.loadFromFile("ASSETS/IMAGES/buttontxt.png"))
+	if (!m_buttonTxt.loadFromFile("ASSETS/IMAGES/button.png"))
 	{
 		std::cout << "Can't load button texture";
 	}
+	sf::IntRect txtRect;
+	txtRect.position = { 0,0 };
+	txtRect.size = { static_cast<int>(m_buttonTxt.getSize().x) , static_cast<int>(m_buttonTxt.getSize().y) };
 	for (int i = 0; i < m_buttonCount; i++)
 	{
 		auto& sprite = m_buttonSprite.emplace_back(m_buttonTxt);
-		sprite.setPosition({m_xOffset, m_buttonSpacing * (i + m_yOffset)});
+		sprite.setTexture(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({m_xOffset, m_buttonSpacing * i + m_yOffset});
 		sf::Vector2u txtSize = m_buttonTxt.getSize();
 		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 		
@@ -46,13 +51,27 @@ void MainMenu::initialise(sf::Font& t_font)
 	}
 }
 
-void MainMenu::update(sf::Time& t_deltaTime, sf::Window& t_window)
+void MainMenu::processInput(sf::Event& t_event, sf::RenderWindow& t_window)
 {
-	sf::Vector2i mouseLocation;
-	mouseLocation = sf::Mouse::getPosition(t_window);
+	if (const auto resized = t_event.getIf<sf::Event::Resized>()) //debugging to see if window resizing works
+	{
+		sf::Vector2f visibleArea( sf::Vector2f(resized->size));
+		m_mainMenuView.setSize(visibleArea);
+		m_xOffset = (m_mainMenuView.getSize().x / 2) - m_buttonWidth / 2;
+		m_yOffset = 200;
+		t_window.setView(m_mainMenuView);
+	}
+
+}
+
+void MainMenu::update(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
+{
+	sf::Vector2f mouseLocation;
+	mouseLocation = t_window.mapPixelToCoords(sf::Mouse::getPosition(t_window));
 	for (int i = 0; i < m_buttonCount; i++)
 	{
 		m_text[i].setFillColor(sf::Color::White);
+		m_buttonSprite[i].setColor(sf::Color::White);
 	}
 	if (mouseLocation.x > m_xOffset && mouseLocation.x < m_xOffset + m_buttonWidth)
 	{
@@ -88,7 +107,7 @@ void MainMenu::update(sf::Time& t_deltaTime, sf::Window& t_window)
 
 void MainMenu::render(sf::RenderWindow& t_window)
 {
-	//t_window.setView(t_window.getDefaultView());
+	t_window.setView(m_mainMenuView);
 	for (int i = 0; i < m_buttonCount; i++)
 	{
 		t_window.draw(m_buttonSprite[i]);

@@ -2,116 +2,48 @@
 
 #include "WeaponStats.h"
 #include "StatModifiers.h"
-#include "UpgradeLevels.h"
+#include "WeaponUpgradeLevels.h"
 #include "WeaponType.h"
+#include "WeaponUpgradeType.h"
 
 class WeaponUpgrades
 {
 public:
 
-	void levelUpDamage(weaponType& t_weapon)
+	void levelUp(WeaponUpgradeType t_type, weaponType t_weapon)
 	{
-		if (t_weapon == weaponType::melee)
-		{
-			melee.damageLevel++;
-		}
-		if (t_weapon == weaponType::short_range)
-		{
-			shortRange.damageLevel++;
-		}
-		if (t_weapon == weaponType::medium_range)
-		{
-			mediumRange.damageLevel++;
-		}
-		if (t_weapon == weaponType::long_range)
-		{
-			longRange.damageLevel++;
-		}
+		auto& w = m_weapons[static_cast<size_t>(t_weapon)];
+
+		w.levels[static_cast<size_t>(t_type)]++;
+
 	}
 
-	void levelUpCooldown(weaponType& t_weapon)
+	void ApplyUpgrades(WeaponStats& stats, weaponType t_weapon)
 	{
-		if (t_weapon == weaponType::melee)
-		{
-			melee.cooldownLevel++;
-		}
-		if (t_weapon == weaponType::short_range)
-		{
-			shortRange.cooldownLevel++;
-		}
-		if (t_weapon == weaponType::medium_range)
-		{
-			mediumRange.cooldownLevel++;
-		}
-		if (t_weapon == weaponType::long_range)
-		{
-			longRange.cooldownLevel++;
-		}
+		stats.damageMod.flat += 4.0f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponDamage)];
+		stats.cooldownMod.percent -= 0.05f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponCooldown)];
+		stats.projMod.percent += 0.1f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponProjSpeed)];
+		stats.rangeMod.percent += 0.1f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponRange)];
 	}
 
-	void levelUpProj(weaponType& t_weapon)
+	int getCost(WeaponUpgradeType t_type, weaponType t_weapon)
 	{
-		if (t_weapon == weaponType::melee)
-		{
-			melee.projSpeedLevel++;
-		}
-		if (t_weapon == weaponType::short_range)
-		{
-			shortRange.projSpeedLevel++;
-		}
-		if (t_weapon == weaponType::medium_range)
-		{
-			mediumRange.projSpeedLevel++;
-		}
-		if (t_weapon == weaponType::long_range)
-		{
-			longRange.projSpeedLevel++;
-		}
+		const auto& w = m_weapons[static_cast<size_t>(t_weapon)];
+
+		int level = w.levels[static_cast<size_t>(t_type)];
+
+		return baseCost + (4 * level);
 	}
 
-	void levelUpRange(weaponType& t_weapon)
+	int getLevel(WeaponUpgradeType type, weaponType weapon)
 	{
-		if (t_weapon == weaponType::melee)
-		{
-			melee.rangeLevel++;
-		}
-		if (t_weapon == weaponType::short_range)
-		{
-			shortRange.rangeLevel++;
-		}
-		if (t_weapon == weaponType::medium_range)
-		{
-			mediumRange.rangeLevel++;
-		}
-		if (t_weapon == weaponType::long_range)
-		{
-			longRange.rangeLevel++;
-		}
+		return m_weapons[(size_t)weapon].levels[(size_t)type];
 	}
-
-	void ApplyUpgrades(WeaponStats& stats, const UpgradeLevels& levels)
-	{
-		stats.damageMod.flat += 4.0f * levels.damageLevel;
-		stats.cooldownMod.percent -= 0.05f * levels.cooldownLevel;
-		stats.projMod.percent += 0.1f * levels.projSpeedLevel;
-		stats.rangeMod.percent += 0.1 * levels.rangeLevel;
-	}
-
-
-
-
 
 private:
-	StatModifier m_damage;
-	StatModifier m_cooldown;
-	StatModifier m_bulletSpeed;
-	StatModifier m_range;
-	UpgradeLevels melee;
-	UpgradeLevels shortRange;
-	UpgradeLevels mediumRange;
-	UpgradeLevels longRange;
+	std::array<WeaponUpgradeLevels, static_cast<size_t>(weaponType::COUNT)> m_weapons;
 
-
+	int baseCost = 4;
 
 
 

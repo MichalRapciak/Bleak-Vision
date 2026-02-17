@@ -97,38 +97,38 @@ void PlayerController::update(float dt, GamePlay& game)
 {
 	if (m_up) // these 4 statements set player velocity in given direction
 	{
-		m_speedVector.y -= m_player.getSpeed();
+		m_speedVector.y -= m_player.getAcceleration();
 	}
 	if (m_down)
 	{
-		m_speedVector.y += m_player.getSpeed();
+		m_speedVector.y += m_player.getAcceleration();
 	}
 	if (m_left)
 	{
-		m_speedVector.x -= m_player.getSpeed();
+		m_speedVector.x -= m_player.getAcceleration();
 	}
 	if (m_right)
 	{
-		m_speedVector.x += m_player.getSpeed();
+		m_speedVector.x += m_player.getAcceleration();
 	}
 	//
 	if (!isSprinting)  // These statements cap velocity at player's max speed
 	{
-		if (m_speedVector.x > m_player.getTopSpeed())
+		if (m_speedVector.x > m_player.getWalkSpeed())
 		{
-			m_speedVector.x = m_player.getTopSpeed();
+			m_speedVector.x = m_player.getWalkSpeed();
 		}
-		else if (m_speedVector.x < -(m_player.getTopSpeed()))
+		else if (m_speedVector.x < -(m_player.getWalkSpeed()))
 		{
-			m_speedVector.x = -m_player.getTopSpeed();
+			m_speedVector.x = -m_player.getWalkSpeed();
 		}
-		if (m_speedVector.y > m_player.getTopSpeed())
+		if (m_speedVector.y > m_player.getWalkSpeed())
 		{
-			m_speedVector.y = m_player.getTopSpeed();
+			m_speedVector.y = m_player.getWalkSpeed();
 		}
-		else if (m_speedVector.y < -(m_player.getTopSpeed()))
+		else if (m_speedVector.y < -(m_player.getWalkSpeed()))
 		{
-			m_speedVector.y = -m_player.getTopSpeed();
+			m_speedVector.y = -m_player.getWalkSpeed();
 		}
 	}
 	else
