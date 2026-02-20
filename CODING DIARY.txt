@@ -70,3 +70,9 @@ Added a wave system
 Added player spin move
 Added game over
 Added player transformation
+20/02/2026
+Fine tuned settings and statistics
+Added displays
+Remade sprites
+Added Level transforming
+Added Ending
