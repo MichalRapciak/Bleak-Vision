@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <math.h>
+#include "Wave.h"
 
 class GamePlay;
 
@@ -22,9 +23,13 @@ public:
 
 	void initialiseArrays();
 	void initialiseMap();
+	void update(GamePlay& game);
 	int returnTile(sf::Vector2f t_Pos);
 	bool isSolid(sf::Vector2i t_pos);
 	void spawnEnemies(GamePlay& game);
+	int getMaxEnemiesAlive() { return maxEnemiesAlive; }
+	int getCurrentWave() { return currentWaveIndex; }
+
 
 	sf::Sprite getLevelBG() { return m_levelBG; }
 
@@ -36,5 +41,10 @@ private:
 	int levelGrid1[Y_BOXES][X_BOXES];
 	int tile;
 	short randomNo = 0;
+
+	std::vector<Wave> m_waves;
+
+	int currentWaveIndex = 0;
+	int maxEnemiesAlive = 60;
 
 };

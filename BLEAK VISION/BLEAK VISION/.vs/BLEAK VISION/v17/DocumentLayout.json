@@ -3,48 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\SkillTree.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\GamePlay.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\GamePlay.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\MainMenu.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\MainMenu.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\SkillTree.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\SkillTree.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Help.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Help.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\GamePlay.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\GamePlay.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\MainMenu.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\PlayerController.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\PlayerController.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\Level.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\EnemyController.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8FAE3613-1AB7-4D2C-A727-597C2556F5B5}|BLEAK VISION\\BLEAK VISION.vcxproj|solutionrelative:BLEAK VISION\\EnemyController.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,136 +62,149 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainMenu.cpp",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.cpp",
-              "RelativeDocumentMoniker": "BLEAK VISION\\MainMenu.cpp",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.cpp",
-              "RelativeToolTip": "BLEAK VISION\\MainMenu.cpp",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAEQAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-02-17T03:05:14.259Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Help.cpp",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Help.cpp",
-              "RelativeDocumentMoniker": "BLEAK VISION\\Help.cpp",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Help.cpp",
-              "RelativeToolTip": "BLEAK VISION\\Help.cpp",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAmwBoAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-02-17T03:04:08.069Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainMenu.h",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.h",
-              "RelativeDocumentMoniker": "BLEAK VISION\\MainMenu.h",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.h",
-              "RelativeToolTip": "BLEAK VISION\\MainMenu.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-02-17T03:00:05.409Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Player.h",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.h",
-              "RelativeDocumentMoniker": "BLEAK VISION\\Player.h",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.h",
-              "RelativeToolTip": "BLEAK VISION\\Player.h",
-              "ViewState": "AgIAACQAAAAAAAAAAAAEwDoAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-02-16T18:56:29.303Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SkillTree.h",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.h",
-              "RelativeDocumentMoniker": "BLEAK VISION\\SkillTree.h",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.h",
-              "RelativeToolTip": "BLEAK VISION\\SkillTree.h",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAFsAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-02-16T14:39:41.252Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SkillTree.cpp",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.cpp",
-              "RelativeDocumentMoniker": "BLEAK VISION\\SkillTree.cpp",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.cpp",
-              "RelativeToolTip": "BLEAK VISION\\SkillTree.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAOAAAAAjAAAAAAAAAA==",
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\main.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\main.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\main.cpp",
+              "RelativeToolTip": "BLEAK VISION\\main.cpp",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAA8AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-02-16T15:24:00.359Z",
+              "WhenOpened": "2026-02-20T02:04:16.995Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Player.cpp",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.cpp",
-              "RelativeDocumentMoniker": "BLEAK VISION\\Player.cpp",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.cpp",
-              "RelativeToolTip": "BLEAK VISION\\Player.cpp",
-              "ViewState": "AgIAAMYAAAAAAAAAAAAmwOEAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-02-16T18:56:21.792Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Enemy.cpp",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Enemy.cpp",
-              "RelativeDocumentMoniker": "BLEAK VISION\\Enemy.cpp",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Enemy.cpp",
-              "RelativeToolTip": "BLEAK VISION\\Enemy.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-02-16T21:59:14.988Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Game.cpp",
-              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.cpp",
-              "RelativeDocumentMoniker": "BLEAK VISION\\Game.cpp",
-              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.cpp",
-              "RelativeToolTip": "BLEAK VISION\\Game.cpp",
-              "ViewState": "AgIAAHoAAAAAAAAAAAAAAEQAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-02-15T14:44:03.174Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "Game.h",
               "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.h",
               "RelativeDocumentMoniker": "BLEAK VISION\\Game.h",
               "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.h",
               "RelativeToolTip": "BLEAK VISION\\Game.h",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADcAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAADUAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-02-15T14:44:00.038Z",
+              "WhenOpened": "2026-02-20T00:34:03.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainMenu.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\MainMenu.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\MainMenu.cpp",
+              "RelativeToolTip": "BLEAK VISION\\MainMenu.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-20T00:43:08.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Game.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\Game.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Game.cpp",
+              "RelativeToolTip": "BLEAK VISION\\Game.cpp",
+              "ViewState": "AgIAAEoAAAAAAAAAAAD4v10AAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-20T00:34:08.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Enemy.h",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Enemy.h",
+              "RelativeDocumentMoniker": "BLEAK VISION\\Enemy.h",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Enemy.h",
+              "RelativeToolTip": "BLEAK VISION\\Enemy.h",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACAAAAB/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-20T00:28:31.292Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Level.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Level.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\Level.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Level.cpp",
+              "RelativeToolTip": "BLEAK VISION\\Level.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-20T00:06:27.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EnemyController.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\EnemyController.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\EnemyController.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\EnemyController.cpp",
+              "RelativeToolTip": "BLEAK VISION\\EnemyController.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-20T00:06:22.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SkillTree.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\SkillTree.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\SkillTree.cpp",
+              "RelativeToolTip": "BLEAK VISION\\SkillTree.cpp",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAkwBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-19T23:53:56.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Player.h",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.h",
+              "RelativeDocumentMoniker": "BLEAK VISION\\Player.h",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.h",
+              "RelativeToolTip": "BLEAK VISION\\Player.h",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-19T20:44:59.832Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PlayerController.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\PlayerController.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\PlayerController.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\PlayerController.cpp",
+              "RelativeToolTip": "BLEAK VISION\\PlayerController.cpp",
+              "ViewState": "AgIAADwAAAAAAAAAAAAIwFMAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-19T15:29:38.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GamePlay.h",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\GamePlay.h",
+              "RelativeDocumentMoniker": "BLEAK VISION\\GamePlay.h",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\GamePlay.h",
+              "RelativeToolTip": "BLEAK VISION\\GamePlay.h",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-18T23:45:56.852Z",
               "EditorCaption": ""
             },
             {
@@ -194,9 +215,22 @@
               "RelativeDocumentMoniker": "BLEAK VISION\\GamePlay.cpp",
               "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\GamePlay.cpp",
               "RelativeToolTip": "BLEAK VISION\\GamePlay.cpp",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAAAJcAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAIwKAAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-02-13T20:33:22.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Player.cpp",
+              "DocumentMoniker": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.cpp",
+              "RelativeDocumentMoniker": "BLEAK VISION\\Player.cpp",
+              "ToolTip": "C:\\Users\\micha\\Desktop\\BLEAK VISION\\Bleak-Vision\\BLEAK VISION\\BLEAK VISION\\BLEAK VISION\\Player.cpp",
+              "RelativeToolTip": "BLEAK VISION\\Player.cpp",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAswAsBAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-19T20:45:20.537Z",
               "EditorCaption": ""
             }
           ]

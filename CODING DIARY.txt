@@ -60,3 +60,13 @@ Rewrote the game to include different menus/game screens to allow for menus late
 Rewrote Upgrade Code to be more efficient
 Wrote Skills Tree Menu, Weapon Upgrades Menu and Player Upgrades menu
 Wrote Player Upgrades System
+18/02/2026
+Rewrote weapons to work for enemies
+Rewrote enemy AI to attack player
+Added enemies spawning with random weapon
+Adjusted upgrade strength
+19/02/2026
+Added a wave system
+Added player spin move
+Added game over
+Added player transformation

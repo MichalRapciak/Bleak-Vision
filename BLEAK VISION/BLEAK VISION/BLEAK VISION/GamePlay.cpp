@@ -1,12 +1,12 @@
 #include "GamePlay.h"
 #include "Game.h"
 
-GamePlay::GamePlay() : m_pauseText(m_font)
+GamePlay::GamePlay() : m_pauseText(m_font), m_playerHealth(m_font), m_gameOverText(m_font)
 {
 	setupGame();
 	m_playerCam.setCenter(m_player->getPosition());
-	m_playerCam.zoom(1.5f);
 	m_playerCam.setSize({ 1920,1080 });
+	m_playerCam.zoom(1.0f);
 }
 
 GamePlay::~GamePlay()
@@ -17,7 +17,7 @@ void GamePlay::initialise(sf::Font& t_font)
 {
 	m_font = t_font;
 	m_pauseText.setFont(m_font); // Text seen on the screen
-	m_pauseText.setString("Game Paused - Press Space to Skill Tree");
+	m_pauseText.setString("Game Paused - Press Space to enter Skill Tree");
 	m_pauseText.setCharacterSize(42);
 	m_pauseText.setFillColor(sf::Color::Red);
 	m_pauseText.setStyle(sf::Text::Bold);
@@ -26,7 +26,22 @@ void GamePlay::initialise(sf::Font& t_font)
 	float xpos = (1920 / 2) - (textSize.size.x / 2);
 	m_pauseText.setPosition({ xpos, 1080 * 0.5f });
 
-}
+	m_gameOverText.setFont(m_font); // Text seen on the screen
+	m_gameOverText.setString("You have Failed.\n Return to the Main Menu\nBy pressing space");
+	m_gameOverText.setCharacterSize(42);
+	m_gameOverText.setFillColor(sf::Color::Red);
+	m_gameOverText.setStyle(sf::Text::Bold);
+
+	textSize = m_gameOverText.getGlobalBounds(); // will be used to put the text in the middle
+	xpos = (1920 / 2) - (textSize.size.x / 2);
+	m_gameOverText.setPosition({ xpos, 1080 * 0.5f });
+
+	m_playerHealth.setFont(m_font);
+	m_playerHealth.setFillColor(sf::Color::White);
+	m_playerHealth.setCharacterSize(40);
+	m_playerHealth.setPosition({ 100,100 });
+
+}	
 
 /// <summary>
 /// handle user and system events / inputs
@@ -43,18 +58,22 @@ void GamePlay::processEvents(sf::Event& t_event,sf::RenderWindow& t_window)
 	if(const auto keyPressed = t_event.getIf<sf::Event::KeyPressed>()) //user pressed a key
 	{
 		processKeys(t_event);
+		if (!m_pause)
 		m_playerController->inputHandler(t_event);
 	}
 	if(const auto keyReleased = t_event.getIf<sf::Event::KeyReleased>())
 	{
+		if (!m_pause)
 		m_playerController->inputHandler(t_event);
 	}
 	if (const auto buttonPressed = t_event.getIf<sf::Event::MouseButtonPressed>())
 	{
+		if (!m_pause)
 		m_playerController->inputHandler(t_event);
 	}
 	if (const auto buttonReleased = t_event.getIf<sf::Event::MouseButtonReleased>())
 	{
+		if (!m_pause)
 		m_playerController->inputHandler(t_event);
 	}
 }
@@ -67,7 +86,7 @@ void GamePlay::processKeys(sf::Event t_event)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		if (!m_pause)
+		if (!m_pause && !m_gameOver)
 		{
 			m_pause = true;
 		}
@@ -78,7 +97,7 @@ void GamePlay::processKeys(sf::Event t_event)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G))
 	{
-		auto newEnemy = std::make_unique<Enemy>();
+		auto newEnemy = std::make_unique<Enemy>(m_level1.getCurrentWave());
 		m_enemies.push_back(std::move(newEnemy));
 		refreshEntities();
 	}
@@ -89,6 +108,13 @@ void GamePlay::processKeys(sf::Event t_event)
 			Game::currentState = GameState::SkillTree;
 		}
 	}
+	if (m_gameOver)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+		{
+			Game::currentState = GameState::MainMenu;
+		}
+	}
 }
 
 /// <summary>
@@ -97,15 +123,20 @@ void GamePlay::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void GamePlay::update(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
 {
-	if (!m_pause)
+	if (m_player->getDead())
+	{
+		m_gameOver = true;
+	}
+	if (!m_pause && !m_gameOver)
 	{
 		m_enemyController->aimAtPlayer(m_player->getPosition());
 		m_enemyController->movementAI();
+		m_enemyController->update(t_deltaTime.asSeconds(), *this, m_player->getPosition(), m_level1);
 		mouseWorld = t_window.mapPixelToCoords(sf::Mouse::getPosition(t_window)); // This gets mouse position in the world, depending on camera/view
 		m_playerController->update(t_deltaTime.asSeconds(), *this);
 		m_playerController->mouseAiming(mouseWorld);
 		m_player->update(t_deltaTime.asSeconds(), m_level1);
-		m_level1.spawnEnemies(*this);
+		m_level1.update(*this);
 		for (auto& enemy : m_enemies)
 		{
 			enemy->update(t_deltaTime.asSeconds(), m_level1, *m_player);
@@ -114,9 +145,8 @@ void GamePlay::update(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
 		{
 			projectile->update(t_deltaTime.asSeconds(), m_level1);
 		}
-		refreshEntities();
 		Collisions::getInstance().update(m_entities);
-		t_window.setView(m_playerCam); // Set Camera to player camera
+		refreshEntities();
 		m_playerCam.setCenter({ (m_player->getPosition().x),(m_player->getPosition().y) }); // Center player camera to the player
 	}
 }
@@ -126,22 +156,22 @@ void GamePlay::update(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
 /// </summary>
 void GamePlay::render(sf::RenderWindow& t_window)
 {
+	t_window.setView(m_playerCam); // Set Camera to player camera
 	t_window.draw(m_level1.getLevelBG());
 	t_window.draw(m_player->getSprite());
 	t_window.draw(m_player->getWeaponSprite());
 	for (auto& enemy : m_enemies)
 	{
 		t_window.draw(enemy->getSprite());
+		t_window.draw(enemy->getWeaponSprite());
 	}
 	for (auto& projectile : m_projectiles)
 	{
 		t_window.draw(projectile->getSprite());
 	}
-	/* This is used to draw the debug box around melee attack area
-	if (m_player->getWeapon()) {  // check pointer
-		m_window.draw(m_player->getWeapon()->getDebugBox());
-	}
-	*/
+	t_window.setView(t_window.getDefaultView());
+	t_window.draw(m_playerHealth);
+	t_window.setView(m_playerCam); // Set Camera to player camera
 	if (m_pause)
 	{
 		t_window.setView(t_window.getDefaultView());
@@ -150,6 +180,16 @@ void GamePlay::render(sf::RenderWindow& t_window)
 		overlay.setFillColor(sf::Color(100, 100, 100, 150));
 		t_window.draw(overlay);
 		t_window.draw(m_pauseText);
+		t_window.setView(m_playerCam);
+	}
+	if (m_gameOver)
+	{
+		t_window.setView(t_window.getDefaultView());
+		sf::RectangleShape overlay;
+		overlay.setSize(sf::Vector2f(t_window.getSize()));
+		overlay.setFillColor(sf::Color(50, 50, 50, 100));
+		t_window.draw(overlay);
+		t_window.draw(m_gameOverText);
 		t_window.setView(m_playerCam);
 	}
 }
@@ -162,7 +202,7 @@ void GamePlay::setupGame()
 	m_player = std::make_unique<Player>();
 	m_entities.push_back(m_player.get());
 	m_playerController = std::make_unique<PlayerController>(*m_player);
-	auto newEnemy = std::make_unique<Enemy>();
+	auto newEnemy = std::make_unique<Enemy>(m_level1.getCurrentWave());
 	Entity* entityPtr = newEnemy.get();
 	m_entities.push_back(entityPtr);
 	m_enemies.push_back(std::move(newEnemy));
@@ -186,6 +226,7 @@ void GamePlay::setupGame()
 /// </summary>
 void GamePlay::refreshEntities()
 {
+	m_playerHealth.setString("Health: " + std::to_string(static_cast<int>(m_player.get()->getHealth())) + "\n" + "Wave: " + std::to_string(m_level1.getCurrentWave()));
 	m_entities.clear();
 	m_enemies.erase // erase enemies from remove_if's new end point to the old end point of the vector
 	(
@@ -225,7 +266,10 @@ void GamePlay::refreshEntities()
 	{
 		m_entities.push_back(projectiles.get());
 	}
+
+	enemiesKilled = m_player.get()->getEnemiesKilled();
 }
+
 void GamePlay::spawnProjectile(Entity* shooter, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range, int txt)
 {
 	if (txt == 1)
@@ -244,7 +288,7 @@ void GamePlay::spawnProjectile(Entity* shooter, const sf::Vector2f& position, co
 
 void GamePlay::spawnEnemy(sf::Vector2f t_pos)
 {
-	auto newEnemy = std::make_unique<Enemy>();
+	auto newEnemy = std::make_unique<Enemy>(m_level1.getCurrentWave());
 	newEnemy->setPosition(t_pos);
 	m_enemies.push_back(std::move(newEnemy));
 	refreshEntities();

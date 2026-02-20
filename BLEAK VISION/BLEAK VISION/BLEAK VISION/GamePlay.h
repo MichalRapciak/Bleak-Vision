@@ -5,9 +5,11 @@
 #include "Enemy.h"
 #include "EnemyController.h"
 #include "Level.h"
+#include "Entity.h"
 #include "Collisions.h"
 #include "Projectile.h"
 #include "HitInfo.h"
+#include "Weapon.h"
 
 class GamePlay
 {
@@ -25,15 +27,20 @@ public:
 	int getEnemyCount() { return m_enemies.size(); };
 	void spawnEnemy(sf::Vector2f t_pos);
 	Player& getPlayer() { return *m_player; }
+	int getEnemiesKilled() { return enemiesKilled; }
+	void resetEnemiesKilled() { enemiesKilled = 0; m_player.get()->setEnemiesKilled(0); }
 
-
+	bool getGameOver() { return m_gameOver; }
 
 protected:
 	sf::Font m_font;
 	sf::Text m_pauseText;
+	sf::Text m_gameOverText;
+	sf::Text m_playerHealth;
 
 private:
 	bool m_pause = false;
+	bool m_gameOver = false;
 
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<PlayerController> m_playerController;
@@ -49,6 +56,8 @@ private:
 	sf::Texture m_sProjTxt;
 	sf::Texture m_mProjTxt;
 	sf::Texture m_LProjTxt;
+
+	int enemiesKilled = 0;
 
 	void setupGame();
 	void refreshEntities();

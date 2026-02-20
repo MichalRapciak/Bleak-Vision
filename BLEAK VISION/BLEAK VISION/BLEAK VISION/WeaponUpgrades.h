@@ -20,10 +20,10 @@ public:
 
 	void ApplyUpgrades(WeaponStats& stats, weaponType t_weapon)
 	{
-		stats.damageMod.flat += 4.0f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponDamage)];
-		stats.cooldownMod.percent -= 0.05f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponCooldown)];
-		stats.projMod.percent += 0.1f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponProjSpeed)];
-		stats.rangeMod.percent += 0.1f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponRange)];
+		stats.damageMod.flat = 2.0f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponDamage)];
+		stats.cooldownMod.percent = 0.025f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponCooldown)];
+		stats.projMod.percent = 0.025f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponProjSpeed)];
+		stats.rangeMod.percent = 0.05f * m_weapons[(size_t)t_weapon].levels[static_cast<size_t>(WeaponUpgradeType::weaponRange)];
 	}
 
 	int getCost(WeaponUpgradeType t_type, weaponType t_weapon)

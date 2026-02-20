@@ -54,6 +54,10 @@ void PlayerController::inputHandler(const sf::Event t_event)
 		{
 			m_player.equipWeapon(weaponType::long_range);
 		}
+		if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
+		{
+			m_player.startRoll(m_speedVector);
+		}
 	}
 	if (const auto keyReleased = t_event.getIf<sf::Event::KeyReleased>())
 	{

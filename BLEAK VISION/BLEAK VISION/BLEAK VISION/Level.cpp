@@ -10,6 +10,8 @@ Level::Level() : m_levelBG(m_levelTXT)
 	initialiseArrays();
 	initialiseMap();
 	srand(time(nullptr)); // sets up random seed
+	m_waves.push_back({30, 0, 0, 20}); // enemies to spawn, enemies spawned, enemies killed
+	currentWaveIndex = 0;
 }
 
 Level::~Level()
@@ -28,6 +30,24 @@ void Level::initialiseMap()
 	m_levelBG.setTexture(m_levelTXT);
 	m_levelBG.setPosition({ 0, 0 });
 	m_levelBG.setTextureRect(sf::IntRect({ 0,0 }, { 5000,5000 }));
+}
+
+void Level::update(GamePlay& game)
+{
+	Wave& wave = m_waves[currentWaveIndex];
+	wave.enemiesKilled = game.getEnemiesKilled();
+	if (wave.enemiesSpawned < wave.enemiesToSpawn)
+	{
+		spawnEnemies(game);
+
+	}
+	if (wave.enemiesKilled >= wave.enemiesToSpawn && currentWaveIndex < 10)
+	{
+		game.resetEnemiesKilled();
+		currentWaveIndex++;
+		m_waves.push_back({30 + 15 * (currentWaveIndex),0,0,20 + 10 * currentWaveIndex});
+	}
+
 }
 
 /// <summary>
@@ -73,7 +93,8 @@ bool Level::isSolid(sf::Vector2i t_pos)
 
 void Level::spawnEnemies(GamePlay& game)
 {
-	if (game.getEnemyCount() < 40)
+	Wave& wave = m_waves[currentWaveIndex];
+	if (game.getEnemyCount() < wave.enemiesAliveMax)
 	{
 		for (int y = 0; y != Y_BOXES; y++)
 		{
@@ -86,6 +107,7 @@ void Level::spawnEnemies(GamePlay& game)
 					if (randomNo == 1)
 					{
 						game.spawnEnemy({ x * 100.0f, y * 100.0f });
+						wave.enemiesSpawned++;
 					}
 				}
 			}

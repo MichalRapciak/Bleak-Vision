@@ -52,8 +52,8 @@ private:
 	SplashScreen m_splashScreen;
 	MainMenu m_mainMenuScreen;
 	Help m_helpScreen;
-	GamePlay m_gamingScreen;
-	SkillTree m_skillTree;
+	std::unique_ptr<GamePlay> m_gamingScreen;
+	std::unique_ptr<SkillTree> m_skillTree;
 
 	bool m_exitGame; // control exiting game
 

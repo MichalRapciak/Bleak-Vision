@@ -10,11 +10,12 @@ GameState Game::currentState = GameState::License;
 /// load and setup the text 
 /// load and setup thne image
 /// </summary>
-Game::Game() : m_skillTree(m_gamingScreen.getPlayer()),
-	m_window{ sf::VideoMode({ 1920U, 1080U }), "BLEAK VISION" },
+Game::Game() :
+	m_window{ sf::VideoMode({ 1920U, 1080U }), "BLEAK VISION", sf::State::Fullscreen},
 	m_exitGame{ false } //when true game will exit
 
 {
+	m_window.setVerticalSyncEnabled(true);
 	initialiseStates();
 }
 
@@ -38,7 +39,7 @@ void Game::run()
 	sf::Clock gameClock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	const float fps{ 75.0f };
-	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 70 fps
+	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 75 fps
 	while (m_window.isOpen())
 	{
 		processEvents(); // as many as possible
@@ -85,10 +86,10 @@ void Game::processEvents()
 			m_helpScreen.processInput(*event);
 			break;
 		case GameState::GamePlay:
-			m_gamingScreen.processEvents(*event,m_window);
+			m_gamingScreen->processEvents(*event,m_window);
 			break;
 		case GameState::SkillTree:
-			m_skillTree.processInput(*event,m_window);
+			m_skillTree->processInput(*event,m_window);
 		default:
 			break;
 		}
@@ -130,31 +131,40 @@ void Game::update(sf::Time t_deltaTime)
 	case GameState::License:
 		m_licenseScreen.update(t_deltaTime);
 		break;
-	case GameState::Splash:
+	case GameState::Splash:	
 		m_splashScreen.update(t_deltaTime);
 		break;
 	case GameState::MainMenu:
 		m_mainMenuScreen.update(t_deltaTime, m_window);
+		if (m_gamingScreen->getGameOver())
+		{
+			m_gamingScreen.reset();
+			m_gamingScreen = std::make_unique<GamePlay>();
+			m_gamingScreen->initialise(m_font);
+			m_skillTree.reset();
+			m_skillTree = std::make_unique<SkillTree>(m_gamingScreen->getPlayer());
+			m_skillTree->initialise(m_font);
+		}
 		break;
 	case GameState::Help:
 		m_helpScreen.update(t_deltaTime);
 		break;
 	case GameState::GamePlay:
-		m_gamingScreen.update(t_deltaTime, m_window);
+		m_gamingScreen->update(t_deltaTime, m_window);
 		break;
 	case GameState::SkillTree:
-		if (m_skillTree.hasWeaponUpRequest())
+		if (m_skillTree->hasWeaponUpRequest())
 		{
-			WeaponUpgradeType type = m_skillTree.getWeaponUpRequest();
-			weaponType weaponType = m_skillTree.requestedWeapon();
-			m_gamingScreen.getPlayer().tryBuyWeaponUpgrade(type, weaponType);
+			WeaponUpgradeType type = m_skillTree->getWeaponUpRequest();
+			weaponType weaponType = m_skillTree->requestedWeapon();
+			m_gamingScreen->getPlayer().tryBuyWeaponUpgrade(type, weaponType);
 		}
-		if (m_skillTree.hasPlayerUpRequest())
+		if (m_skillTree->hasPlayerUpRequest())
 		{
-			PlayerUpgradeType type = m_skillTree.getPlayerUpRequest();
-			m_gamingScreen.getPlayer().tryBuyPlayerUpgrade(type);
+			PlayerUpgradeType type = m_skillTree->getPlayerUpRequest();
+			m_gamingScreen->getPlayer().tryBuyPlayerUpgrade(type);
 		}
-		m_skillTree.update(t_deltaTime, m_window);
+		m_skillTree->update(t_deltaTime, m_window);
 		break;
 	default:
 		break;
@@ -184,10 +194,10 @@ void Game::render()
 		m_helpScreen.render(m_window);
 		break;
 	case GameState::GamePlay:
-		m_gamingScreen.render(m_window);
+		m_gamingScreen->render(m_window);
 		break;
 	case GameState::SkillTree:
-		m_skillTree.render(m_window);
+		m_skillTree->render(m_window);
 		break;
 	default:
 		break;
@@ -205,7 +215,9 @@ void Game::initialiseStates()
 	m_splashScreen.initialise(m_font);
 	m_mainMenuScreen.initialise(m_font);
 	m_helpScreen.initialise(m_font);
-	m_gamingScreen.initialise(m_font);
-	m_skillTree.initialise(m_font);
+	m_gamingScreen = std::make_unique<GamePlay>();
+	m_gamingScreen->initialise(m_font);
+	m_skillTree = std::make_unique<SkillTree>(m_gamingScreen->getPlayer());
+	m_skillTree->initialise(m_font);
 }
 

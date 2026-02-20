@@ -22,8 +22,8 @@ public:
 
 
 
-	sf::Vector2f getPosition() { return m_playerPosition; }
-	sf::Sprite getSprite() { return m_playerSprite; }
+	sf::Vector2f getPosition() const override { return m_playerPosition; }
+	sf::Sprite getSprite() const override{ return m_playerSprite; }
 	void setPlayerTexture(sf::Texture t_texture) { m_playerTexture = t_texture; }
 	void setPosition(sf::Vector2f t_location) { m_playerPosition = t_location; m_playerSprite.setPosition(m_playerPosition); }
 	sf::Vector2f getVelocity() { return m_playerVelocity; }
@@ -32,25 +32,29 @@ public:
 	float getAcceleration() { return m_playerStats.getAccel(); }
 	float getWalkSpeed() { return m_playerStats.getWalkSpeed(); }
 	float getSprintSpeed() { return m_playerStats.getSprintSpeed(); }
-	float getHealth() const override { return m_playerStats.getHealth(); }
+	float getHealth() const override { return m_playerHealth; }
 	float getRegen() { return m_playerStats.getRegen(); }
-	void addSoul() { m_playerSouls++; }
+	void addSoul() { m_playerSouls++; enemiesKilled++; }
 	int getSouls() { return m_playerSouls; }
+	bool getDead() { return isDead; }
 
-	sf::FloatRect getBoundingBox() const override { return sf::FloatRect({ m_playerPosition.x - 25,m_playerPosition.y - 25 }, { 50,50 }); }
+	sf::FloatRect getBoundingBox() const override { return sf::FloatRect({ m_playerPosition.x - 20,m_playerPosition.y - 20 }, { 40,40 }); }
 	void takeDamage(float amount) override { m_playerHealth -= amount; }
 	sf::Vector2f getPlayerAim() { return m_playerAim; }
 
-
+	int getEnemiesKilled() { return enemiesKilled; }
+	void setEnemiesKilled(int num) { enemiesKilled = num; }
 	void setPlayerAim(sf::Vector2f t_mousePos) { m_playerAim = t_mousePos; }
 	void updateAim(sf::Vector2f t_mousePos, float facingDir);
 	void update(float dt, Level& level);
 	void shooting(float dt, GamePlay& game);
 	void equipWeapon(weaponType t_weaponType);
 	sf::Sprite getWeaponSprite() { return m_weaponSprite; }
-	//Weapon* getWeapon() const { if (m_weapon) { return m_weapon.get(); } else {} } // This is to get the debug box for melee attack area
 	void moveWithCollisions(sf::Vector2f movement, Level& level);
 	void moveAxis(float dx, float dy, Level& level);
+
+	void startRoll(sf::Vector2f direction);
+	int getReputation() { return m_reputation; }
 
 	void tryBuyWeaponUpgrade(WeaponUpgradeType t_type, weaponType t_weapon);
 	void tryBuyPlayerUpgrade(PlayerUpgradeType t_type);
@@ -59,6 +63,7 @@ public:
 	int getPlayerUpgLvl(PlayerUpgradeType t_type) { return m_playerUpgrades.getLevel(t_type); }
 	int getPlayerUpgCost(PlayerUpgradeType t_type) { return m_playerUpgrades.getCost(t_type); }
 	void recalculateStats();
+	void updateReputation();
 	
 	WeaponStats m_meleeStats;
 	WeaponStats m_shortStats;
@@ -74,10 +79,21 @@ private:
 	sf::Vector2f m_playerVelocity{ 0.0,0.0 };
 	sf::Vector2f m_playerAim{ 0, 0 }; // coordinates where player is aiming
 
+	bool m_isRolling = false;
+	float m_rollTimer = 0.0f;
+	float m_rollDuration = 0.5f;
+	float m_rollSpeed = 150.f;
+	sf::Vector2f m_rollDirection;
+	float m_rollCooldown = 1.0f;
+	float m_rollCooldownTimer = 0.f;
+
 	float m_playerHealth = 0;
 	int m_playerSouls = 0;
 	PlayerStats m_playerStats;
 	PlayerUpgrades m_playerUpgrades;
+	int enemiesKilled = 0;
+
+	int m_reputation = 0;
 
 	bool isDamaged = false;
 	std::unique_ptr<Weapon> m_weapon; // Creates a pointer to a weapon

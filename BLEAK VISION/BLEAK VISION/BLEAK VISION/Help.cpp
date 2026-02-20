@@ -14,8 +14,8 @@ void Help::initialise(sf::Font& t_font)
 	m_font = t_font;
 
 	m_helpText.setFont(m_font);
-	m_helpText.setString("Use WASD to move around \nPress Shift to sprint\nPress 1/2/3/4 for Melee/Short/Medium/Long Range weapons\nMouse Button 1 to shoot, Mouse to aim\nPress Esc pause during the game\n or to to return to Main Menu now");
-	m_helpText.setCharacterSize(60);
+	m_helpText.setString("Use WASD to move around \nPress Shift to sprint\nPress Space to spin\nPress 1/2/3/4 for Melee/Short/Medium/Long Spells\nMouse Button 1 to shoot, Mouse to aim\nPress Esc to pause during the game\n or to return to Main Menu now");
+	m_helpText.setCharacterSize(40);
 	m_helpText.setFillColor(sf::Color::White);
 
 	sf::FloatRect textSize = m_helpText.getGlobalBounds();

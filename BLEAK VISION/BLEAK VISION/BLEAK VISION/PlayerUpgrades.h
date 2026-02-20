@@ -14,11 +14,11 @@ public:
 
 	void applyPlayerUpgrades(PlayerStats& stats)
 	{
-		stats.healthMod.flat += 10.f * getLevel(PlayerUpgradeType::MaxHealth);
-		stats.walkMod.percent += 0.15f * getLevel(PlayerUpgradeType::WalkSpeed);
-		stats.sprintMod.percent += 0.15f * getLevel(PlayerUpgradeType::SprintSpeed);
-		stats.accelMod.percent += 0.15f * getLevel(PlayerUpgradeType::Acceleration);
-		stats.regenMod.flat += 2.f * getLevel(PlayerUpgradeType::Regen);
+		stats.healthMod.flat = 10.f * getLevel(PlayerUpgradeType::MaxHealth);
+		stats.walkMod.percent = 0.05f * getLevel(PlayerUpgradeType::WalkSpeed);
+		stats.sprintMod.percent = 0.05f * getLevel(PlayerUpgradeType::SprintSpeed);
+		stats.accelMod.percent = 0.05f * getLevel(PlayerUpgradeType::Acceleration);
+		stats.regenMod.flat = 1.f * getLevel(PlayerUpgradeType::Regen);
 	}
 
 	int getLevel(PlayerUpgradeType type)

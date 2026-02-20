@@ -2,19 +2,24 @@
 #include "Collisions.h"
 #include <iostream>
 #include "Level.h"
+#include "Enemy.h"
 
 Projectile::Projectile(Entity* owner, const sf::Texture& texture, const sf::Vector2f& position, const sf::Vector2f& direction, float speed, float damage, float range) : m_projSprite(texture)
 {
 	setPosition(position);
 	m_startPosition = position;
 	m_projSprite.setPosition(m_position);
-	m_projSprite.setTextureRect(sf::IntRect({ 0,0 }, { 40,40 }));
-	m_projSprite.setOrigin({ 20,20 });
+	m_projSprite.setTextureRect(sf::IntRect({ 0,0 }, { (int)texture.getSize().x,(int)texture.getSize().y }));
+	m_projSprite.setOrigin({ texture.getSize().x / 2.0f,texture.getSize().y / 2.0f });
 	m_speed = speed;
 	m_baseDamage = damage;
 	m_owner = owner;
 	m_velocity = direction * m_speed;
 	m_range = range;
+	if (dynamic_cast<Enemy*>(owner))
+	{
+		m_projSprite.setColor(sf::Color::Green);
+	}
 }
 
 Projectile::~Projectile()

@@ -18,6 +18,10 @@ SkillTree::~SkillTree()
 {
 }
 
+/// <summary>
+/// Initializes font, textures and placement of buttons/text
+/// </summary>
+/// <param name="t_font"></param>
 void SkillTree::initialise(sf::Font& t_font)
 {
 	m_font = t_font;
@@ -27,7 +31,7 @@ void SkillTree::initialise(sf::Font& t_font)
 	}
 	m_skillBackgroundTexture.setRepeated(true); // might not be needed if the final background is a full screen image
 	m_skillBackground.setTexture(m_skillBackgroundTexture);
-	m_skillBackground.setTextureRect(sf::IntRect({ 0, 0 }, { static_cast<int>(1920), static_cast<int>(1080) })); // sets it to the size of the window
+	m_skillBackground.setTextureRect(sf::IntRect({ 0, 0 }, { static_cast<int>(1920), static_cast<int>(1080) })); // sets it to the size of the w
 	m_skillBackground.setPosition({ 0, 0 });
 	if (!m_buttonTxt.loadFromFile("ASSETS/IMAGES/button.png"))
 	{
@@ -46,7 +50,9 @@ void SkillTree::initialise(sf::Font& t_font)
 	m_xWeaponOffset = (m_skillTreeView.getSize().x / 5)  - m_buttonWidth/2;
 	m_buttonSpacing = 120;
 	int textDropOffset = 15;
-	sf::String m_Texts[] = { "Weapon Upgrades", "Player Upgrades" , "Back To Game"};
+
+	// setting up text outputs
+	sf::String m_Texts[] = { "Spell Upgrades", "Player Upgrades" , "Back To Game"};
 	sf::String m_meleeTexts[] = { "Melee Swing Speed" , "" , "Melee Damage", "Melee Range"};
 	sf::String m_shortTexts[] = { "Short Spell Fire Rate" , "Short Spell Speed" , "Short Spell Damage", "Short Spell Range" };
 	sf::String m_mediumTexts[] = { "Mid Spell Fire Rate" , "Mid Spell Speed" , "Mid Spell Damage", "Mid Spell Range" };
@@ -54,122 +60,131 @@ void SkillTree::initialise(sf::Font& t_font)
 	sf::String m_playTexts[] = { "Max Health" , "Walk Speed" , "Sprint Speed" , "Acceleration" , "Health Regen" };
 	sf::String m_exitText = "Back to Previous Menu";
 
-m_backToSkillsSprite.setTexture(m_buttonTxt);
-m_backToSkillsSprite.setTextureRect(txtRect);
-m_backToSkillsSprite.setPosition({ m_xOffset, 800.f });
-sf::Vector2u txtSize = m_buttonTxt.getSize();
-m_backToSkillsSprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
-m_backToSkillsText.setFont(m_font);
-m_backToSkillsText.setString(m_exitText);
-m_backToSkillsText.setFillColor(sf::Color::White);
-m_backToSkillsText.setCharacterSize(20);
-sf::FloatRect textSize = m_backToSkillsText.getGlobalBounds();
-float exitOffset = (m_buttonWidth - textSize.size.x) / (2);
-m_backToSkillsText.setPosition({ m_xOffset + exitOffset, 800.f + textDropOffset });
+	/// setting up button to go back to the main skills menu
+	{
+		m_backToSkillsSprite.setTexture(m_buttonTxt);
+		m_backToSkillsSprite.setTextureRect(txtRect);
+		m_backToSkillsSprite.setPosition({ m_xOffset, 800.f });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		m_backToSkillsSprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+		m_backToSkillsText.setFont(m_font);
+		m_backToSkillsText.setString(m_exitText);
+		m_backToSkillsText.setFillColor(sf::Color::White);
+		m_backToSkillsText.setCharacterSize(20);
+		sf::FloatRect textSize = m_backToSkillsText.getGlobalBounds();
+		float exitOffset = (m_buttonWidth - textSize.size.x) / (2);
+		m_backToSkillsText.setPosition({ m_xOffset + exitOffset, 800.f + textDropOffset });
+	}
 
-for (int i = 0; i < m_skillTreeButtonCount; i++)
-{
-	auto& sprite = m_buttonSprite.emplace_back(m_buttonTxt);
-	sprite.setTextureRect(txtRect);
-	sprite.setPosition({ m_xOffset, m_buttonSpacing * i + m_yOffset });
-	sf::Vector2u txtSize = m_buttonTxt.getSize();
-	sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+	// main skills menu buttons
+	for (int i = 0; i < m_skillTreeButtonCount; i++)
+	{
+		auto& sprite = m_buttonSprite.emplace_back(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({ m_xOffset, m_buttonSpacing * i + m_yOffset });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 
-	auto& text = m_skillTreeText.emplace_back(m_font);
-	text.setFont(m_font);
-	text.setString(m_Texts[i]);
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(30);
-	sf::FloatRect textSize = text.getGlobalBounds();
-	float textOffset = (m_buttonWidth - textSize.size.x) / (2);
-	text.setPosition({ m_xOffset + textOffset, m_buttonSpacing * i + m_yOffset + textDropOffset });
-}
-for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
-{
-	auto& sprite = m_meleeSprite.emplace_back(m_buttonTxt);
-	sprite.setTextureRect(txtRect);
-	sprite.setPosition({ m_xWeaponOffset, m_buttonSpacing * i + m_yWeaponOffset });
-	sf::Vector2u txtSize = m_buttonTxt.getSize();
-	sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+		auto& text = m_skillTreeText.emplace_back(m_font);
+		text.setFont(m_font);
+		text.setString(m_Texts[i]);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(30);
+		sf::FloatRect textSize = text.getGlobalBounds();
+		float textOffset = (m_buttonWidth - textSize.size.x) / (2);
+		text.setPosition({ m_xOffset + textOffset, m_buttonSpacing * i + m_yOffset + textDropOffset });
+	}
+	// melee upgrade buttons
+	for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
+	{
+		auto& sprite = m_meleeSprite.emplace_back(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({ m_xWeaponOffset, m_buttonSpacing * i + m_yWeaponOffset });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 
-	auto& text = m_meleeText.emplace_back(m_font);
-	text.setFont(m_font);
-	text.setString(m_meleeTexts[i]);
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(20);
-	sf::FloatRect textSize = text.getGlobalBounds();
-	float textOffset = (m_buttonWidth - textSize.size.x) / (2);
-	text.setPosition({ m_xWeaponOffset + textOffset, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
-}
-for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
-{
-	auto& sprite = m_shortSprite.emplace_back(m_buttonTxt);
-	sprite.setTextureRect(txtRect);
-	sprite.setPosition({ 2 * m_xWeaponOffset + m_buttonWidth / 2, m_buttonSpacing * i + m_yWeaponOffset });
-	sf::Vector2u txtSize = m_buttonTxt.getSize();
-	sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+		auto& text = m_meleeText.emplace_back(m_font);
+		text.setFont(m_font);
+		text.setString(m_meleeTexts[i]);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(20);
+		sf::FloatRect textSize = text.getGlobalBounds();
+		float textOffset = (m_buttonWidth - textSize.size.x) / (2);
+		text.setPosition({ m_xWeaponOffset + textOffset, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
+	}
+	// short spell buttons
+	for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
+	{
+		auto& sprite = m_shortSprite.emplace_back(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({ 2 * m_xWeaponOffset + m_buttonWidth / 2, m_buttonSpacing * i + m_yWeaponOffset });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 
-	auto& text = m_shortText.emplace_back(m_font);
-	text.setFont(m_font);
-	text.setString(m_shortTexts[i]);
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(20);
-	sf::FloatRect textSize = text.getGlobalBounds();
-	float textOffset = (m_buttonWidth - textSize.size.x) / (2);
-	text.setPosition({ 2 * m_xWeaponOffset + textOffset + m_buttonWidth / 2, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
-}
-for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
-{
-	auto& sprite = m_mediumSprite.emplace_back(m_buttonTxt);
-	sprite.setTextureRect(txtRect);
-	sprite.setPosition({ 3 * m_xWeaponOffset + m_buttonWidth, m_buttonSpacing * i + m_yWeaponOffset });
-	sf::Vector2u txtSize = m_buttonTxt.getSize();
-	sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+		auto& text = m_shortText.emplace_back(m_font);
+		text.setFont(m_font);
+		text.setString(m_shortTexts[i]);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(20);
+		sf::FloatRect textSize = text.getGlobalBounds();
+		float textOffset = (m_buttonWidth - textSize.size.x) / (2);
+		text.setPosition({ 2 * m_xWeaponOffset + textOffset + m_buttonWidth / 2, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
+	}
+	// medium spell buttons
+	for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
+	{
+		auto& sprite = m_mediumSprite.emplace_back(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({ 3 * m_xWeaponOffset + m_buttonWidth, m_buttonSpacing * i + m_yWeaponOffset });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 
-	auto& text = m_mediumText.emplace_back(m_font);
-	text.setFont(m_font);
-	text.setString(m_mediumTexts[i]);
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(20);
-	sf::FloatRect textSize = text.getGlobalBounds();
-	float textOffset = (m_buttonWidth - textSize.size.x) / (2);
-	text.setPosition({ 3 * m_xWeaponOffset + textOffset + m_buttonWidth, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
-}
-for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
-{
-	auto& sprite = m_longSprite.emplace_back(m_buttonTxt);
-	sprite.setTextureRect(txtRect);
-	sprite.setPosition({ 4 * m_xWeaponOffset + m_buttonWidth * 1.5f, m_buttonSpacing * i + m_yWeaponOffset });
-	sf::Vector2u txtSize = m_buttonTxt.getSize();
-	sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+		auto& text = m_mediumText.emplace_back(m_font);
+		text.setFont(m_font);
+		text.setString(m_mediumTexts[i]);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(20);
+		sf::FloatRect textSize = text.getGlobalBounds();
+		float textOffset = (m_buttonWidth - textSize.size.x) / (2);
+		text.setPosition({ 3 * m_xWeaponOffset + textOffset + m_buttonWidth, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
+	}
+	// long spell buttons
+	for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
+	{
+		auto& sprite = m_longSprite.emplace_back(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({ 4 * m_xWeaponOffset + m_buttonWidth * 1.5f, m_buttonSpacing * i + m_yWeaponOffset });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 
-	auto& text = m_longText.emplace_back(m_font);
-	text.setFont(m_font);
-	text.setString(m_longTexts[i]);
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(20);
-	sf::FloatRect textSize = text.getGlobalBounds();
-	float textOffset = (m_buttonWidth - textSize.size.x) / (2);
-	text.setPosition({ 4 * m_xWeaponOffset + textOffset + m_buttonWidth * 1.5f, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
-}
-for (int i = 0; i < m_playerUpgradeButtonCount; i++)
-{
-	auto& sprite = m_playerUpgButton.emplace_back(m_buttonTxt);
-	sprite.setTextureRect(txtRect);
-	sprite.setPosition({ m_xOffset, m_buttonSpacing * i + m_yOffset });
-	sf::Vector2u txtSize = m_buttonTxt.getSize();
-	sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
+		auto& text = m_longText.emplace_back(m_font);
+		text.setFont(m_font);
+		text.setString(m_longTexts[i]);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(20);
+		sf::FloatRect textSize = text.getGlobalBounds();
+		float textOffset = (m_buttonWidth - textSize.size.x) / (2);
+		text.setPosition({ 4 * m_xWeaponOffset + textOffset + m_buttonWidth * 1.5f, m_buttonSpacing * i + m_yWeaponOffset + textDropOffset });
+	}
+	// player upgrade buttons
+	for (int i = 0; i < m_playerUpgradeButtonCount; i++)
+	{
+		auto& sprite = m_playerUpgButton.emplace_back(m_buttonTxt);
+		sprite.setTextureRect(txtRect);
+		sprite.setPosition({ m_xOffset, m_buttonSpacing * i + m_yOffset });
+		sf::Vector2u txtSize = m_buttonTxt.getSize();
+		sprite.setScale({ m_buttonWidth / txtSize.x, m_buttonHeight / txtSize.y });
 
-	auto& text = m_playerUpgTxt.emplace_back(m_font);
-	text.setFont(m_font);
-	text.setString(m_playTexts[i]);
-	text.setFillColor(sf::Color::White);
-	text.setCharacterSize(20);
-	sf::FloatRect textSize = text.getGlobalBounds();
-	float textOffset = (m_buttonWidth - textSize.size.x) / (2);
-	text.setPosition({ m_xOffset + textOffset, m_buttonSpacing * i + m_yOffset + textDropOffset });
-}
-
+		auto& text = m_playerUpgTxt.emplace_back(m_font);
+		text.setFont(m_font);
+		text.setString(m_playTexts[i]);
+		text.setFillColor(sf::Color::White);
+		text.setCharacterSize(20);
+		sf::FloatRect textSize = text.getGlobalBounds();
+		float textOffset = (m_buttonWidth - textSize.size.x) / (2);
+		text.setPosition({ m_xOffset + textOffset, m_buttonSpacing * i + m_yOffset + textDropOffset });
+	}
+	// souls display
 	m_souls.setFont(m_font);
 	m_souls.setFillColor(sf::Color::White);
 	m_souls.setCharacterSize(60);
@@ -177,10 +192,16 @@ for (int i = 0; i < m_playerUpgradeButtonCount; i++)
 
 }
 
+/// <summary>
+/// updates whichever menu you're in
+/// </summary>
+/// <param name="t_deltaTime"></param>
+/// <param name="t_window"></param>
 void SkillTree::update(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
 {
 	sf::String soulsString = "Souls: " + std::to_string(m_player.getSouls());
 	m_souls.setString(soulsString);
+
 	switch (m_currentCategory)
 	{
 	case SkillCategory::SkillMenu:
@@ -207,6 +228,10 @@ void SkillTree::processInput(sf::Event& t_event, sf::RenderWindow& t_window)
 	}
 }
 
+/// <summary>
+/// rendering current menu
+/// </summary>
+/// <param name="t_window"></param>
 void SkillTree::render(sf::RenderWindow& t_window)
 {
 	t_window.draw(m_souls);
@@ -229,6 +254,9 @@ void SkillTree::skillTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_windo
 {
 	sf::Vector2f mouseLocation;
 	mouseLocation = t_window.mapPixelToCoords(sf::Mouse::getPosition(t_window));
+
+	bool currentState = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
 	for (int i = 0; i < m_skillTreeButtonCount; i++)
 	{
 		m_skillTreeText[i].setFillColor(sf::Color::White);
@@ -237,7 +265,7 @@ void SkillTree::skillTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_windo
 		{
 			m_buttonSprite[i].setColor(sf::Color{ 100,100,100,255 });
 			m_skillTreeText[i].setFillColor(sf::Color{ 75,75,75,255 });
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			if (currentState && !m_previousMouseState)
 			{
 				if (i == 0) m_currentCategory = SkillCategory::Weapon;
 				if (i == 1) m_currentCategory = SkillCategory::Health;
@@ -245,6 +273,7 @@ void SkillTree::skillTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_windo
 			}
 		}
 	}
+	m_previousMouseState = currentState;
 }
 
 void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
@@ -253,6 +282,9 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 	sf::Vector2f mouseLocation;
 	mouseLocation = t_window.mapPixelToCoords(sf::Mouse::getPosition(t_window));
 	m_levelAndCost.setFillColor(sf::Color::Transparent);
+
+	bool currentState = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
 	for (int i = 0; i < m_weaponUpgradeButtonCount; i++)
 	{
 		m_meleeText[i].setFillColor(sf::Color::White);
@@ -263,6 +295,7 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 		m_mediumSprite[i].setColor(sf::Color::White);
 		m_longText[i].setFillColor(sf::Color::White);
 		m_longSprite[i].setColor(sf::Color::White);
+
 		for (int j = 0; j < m_weaponUpgradeButtonCount; j++)
 		{
 			if (isMouseOverButton(i, mouseLocation, static_cast<weaponType>(j)) == true)
@@ -272,7 +305,7 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 					m_meleeSprite[i].setColor(sf::Color{ 100,100,100,255 });
 					m_meleeText[i].setFillColor(sf::Color{ 75,75,75,255 });
 				
-					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(j), static_cast<weaponType>(i)));
+					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j)));
 					m_levelAndCost.setString(levelandcost);
 					m_levelAndCost.setFillColor(sf::Color::White);
 					m_levelAndCost.setCharacterSize(20);
@@ -283,7 +316,7 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 					m_shortSprite[i].setColor(sf::Color{ 100,100,100,255 });
 					m_shortText[i].setFillColor(sf::Color{ 75,75,75,255 });
 
-					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(j), static_cast<weaponType>(i)));
+					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j)));
 					m_levelAndCost.setString(levelandcost);
 					m_levelAndCost.setFillColor(sf::Color::White);
 					m_levelAndCost.setCharacterSize(20);
@@ -294,7 +327,7 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 					m_mediumSprite[i].setColor(sf::Color{ 100,100,100,255 });
 					m_mediumText[i].setFillColor(sf::Color{ 75,75,75,255 });
 
-					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(j), static_cast<weaponType>(i)));
+					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j)));
 					m_levelAndCost.setString(levelandcost);
 					m_levelAndCost.setFillColor(sf::Color::White);
 					m_levelAndCost.setCharacterSize(20);
@@ -305,13 +338,13 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 					m_longSprite[i].setColor(sf::Color{ 100,100,100,255 });
 					m_longText[i].setFillColor(sf::Color{ 75,75,75,255 });
 
-					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(j), static_cast<weaponType>(i)));
+					sf::String levelandcost = "Level: " + std::to_string(m_player.getWeaponUpgradeLevel(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j))) + " Cost: " + std::to_string(m_player.getWeaponUpgradeCost(static_cast<WeaponUpgradeType>(i), static_cast<weaponType>(j)));
 					m_levelAndCost.setString(levelandcost);
 					m_levelAndCost.setFillColor(sf::Color::White);
 					m_levelAndCost.setCharacterSize(20);
 					m_levelAndCost.setPosition({ m_longText[i].getPosition().x, m_longText[i].getPosition().y + 40 });
 				}
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+				if (currentState && !m_previousMouseState)
 				{
 					m_requestedWeaponUpType = static_cast<WeaponUpgradeType>(i);
 					m_requestedWeapon = static_cast<weaponType>(j);
@@ -330,13 +363,16 @@ void SkillTree::weaponTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 		{
 			m_backToSkillsSprite.setColor(sf::Color{ 100,100,100,255 });
 			m_backToSkillsText.setFillColor(sf::Color{ 75,75,75,255 });
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			if (currentState && !m_previousMouseState)
 			{
 				m_currentCategory = SkillCategory::SkillMenu;
 			}
 		}
 	}
 	
+
+	m_previousMouseState = currentState;
+
 }
 
 void SkillTree::healthTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_window)
@@ -347,6 +383,10 @@ void SkillTree::healthTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 	m_levelAndCost.setFillColor(sf::Color::Transparent);
 	m_backToSkillsText.setFillColor(sf::Color::White);
 	m_backToSkillsSprite.setColor(sf::Color::White);
+
+	bool currentState = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
+
 	for (int i = 0; i < m_playerUpgradeButtonCount; i++)
 	{
 		m_playerUpgTxt[i].setFillColor(sf::Color::White);
@@ -362,7 +402,7 @@ void SkillTree::healthTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 			m_levelAndCost.setCharacterSize(20);
 			m_levelAndCost.setPosition({ m_playerUpgTxt[i].getPosition().x, m_playerUpgTxt[i].getPosition().y + 40 });
 
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			if (currentState && !m_previousMouseState)
 			{
 				m_requestedPlayerUpType = static_cast<PlayerUpgradeType>(i);
 				m_playerUpRequested = true;
@@ -376,12 +416,13 @@ void SkillTree::healthTreeUpdate(sf::Time& t_deltaTime, sf::RenderWindow& t_wind
 		{
 			m_backToSkillsSprite.setColor(sf::Color{ 100,100,100,255 });
 			m_backToSkillsText.setFillColor(sf::Color{ 75,75,75,255 });
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			if (currentState && !m_previousMouseState)
 			{
 				m_currentCategory = SkillCategory::SkillMenu;
 			}
 		}
 	}
+	m_previousMouseState = currentState;
 }
 
 void SkillTree::skillTreeRender(sf::RenderWindow& t_window)

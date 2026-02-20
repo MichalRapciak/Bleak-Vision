@@ -2,6 +2,9 @@
 #include "Enemy.h"
 #include <math.h>
 #include <random>
+#include "Weapon.h"
+#include "WeaponType.h"
+#include "Level.h"
 
 EnemyController::EnemyController(std::vector<std::unique_ptr<Enemy>>& enemies) : m_enemies(enemies)
 {
@@ -14,12 +17,17 @@ EnemyController::~EnemyController()
 /// <summary>
 /// updating enemy movement - can be turned off if within menus.
 /// </summary>
-void EnemyController::update()
+void EnemyController::update(float dt, GamePlay& game, sf::Vector2f playerPos, Level& level)
 {
+	m_playerPos = playerPos;
 	for (auto& enemyPtr : m_enemies)
 	{
 		Enemy& enemy = *enemyPtr;
 		enemy.setVelocity(enemy.getSpeedVector()); // sends the new velocity to the enemy where it's updated
+		if (enemy.getAttackingPlayer() == true)
+		{
+			enemy.shooting(dt, game, playerPos, level);
+		}
 	}
 }
 
@@ -42,10 +50,23 @@ void EnemyController::aimAtPlayer(sf::Vector2f t_playerPos)
 			m_angleDegrees = m_angleRadians * 180.0f / 3.14159265f; // calculate the radians into degrees
 			m_angleDegrees += 90.f; // add an offset as the sprite is facing up by default
 			enemy.updateAim(t_playerPos, m_angleDegrees); // send information to update enemy aim in the enemy class
+			enemy.setAttackingPlayer(true);
 		}
-		else if (enemy.getIsMoving())
+		else if (enemy.getIsMoving() && enemy.getAttackingPlayer() == false)
 		{
 			enemy.setFacingDir(enemy.getNewPos() - enemy.getPosition());
+			m_angleRadians = std::atan2(enemy.getFacingDir().y, enemy.getFacingDir().x);
+			m_angleDegrees = m_angleRadians * 180.0f / 3.1459265f;
+			m_angleDegrees += 90.0f;
+			enemy.updateAim(t_playerPos, m_angleDegrees);
+		}
+		else if (enemy.getDistToPlayer() > 2000 && enemy.getAttackingPlayer() == true)
+		{
+			enemy.setAttackingPlayer(false);
+		}
+		else if (enemy.getAttackingPlayer() == true)
+		{
+			enemy.setFacingDir(t_playerPos - enemy.getPosition());
 			m_angleRadians = std::atan2(enemy.getFacingDir().y, enemy.getFacingDir().x);
 			m_angleDegrees = m_angleRadians * 180.0f / 3.1459265f;
 			m_angleDegrees += 90.0f;
@@ -62,6 +83,12 @@ void EnemyController::movementAI()
 	for (auto& enemyPtr : m_enemies)
 	{
 		Enemy& enemy = *enemyPtr;
+		if (enemy.getAttackingPlayer() == true && enemy.getWeaponType() == weaponType::melee)
+		{
+			enemy.setNewPos(m_playerPos);
+			enemy.setIsMoving(true);
+		}
+
 		if (!enemy.getIsMoving()) // this picks a coordinate for the enemy to walk towards if it's not moving
 		{
 			randomNo = (rand() % 800) + 1;
@@ -89,22 +116,46 @@ void EnemyController::movementAI()
 
 			}
 		}
-		enemy.setSpeedVector({ (enemy.getNewPos().x - enemy.getPosition().x) , (enemy.getNewPos().y - enemy.getPosition().y) });
-		if (enemy.getSpeedVector().x > enemy.getTopSpeed())
+
+		enemy.setSpeedVector({ (enemy.getNewPos().x - enemy.getPosition().x) , (enemy.getNewPos().y - enemy.getPosition().y) }); // set speed after moving
+
+		if (enemy.getAttackingPlayer() == false)
 		{
-			enemy.setSpeedVector({enemy.getTopSpeed(),enemy.getSpeedVector().y });
+			if (enemy.getSpeedVector().x > enemy.getTopSpeed()) // fix speed if faster than walking speed and not engaged
+			{
+				enemy.setSpeedVector({ enemy.getTopSpeed(),enemy.getSpeedVector().y });
+			}
+			else if (enemy.getSpeedVector().x < -(enemy.getTopSpeed()))
+			{
+				enemy.setSpeedVector({ -enemy.getTopSpeed(), enemy.getSpeedVector().y });
+			}
+			if (enemy.getSpeedVector().y > enemy.getTopSpeed())
+			{
+				enemy.setSpeedVector({ enemy.getSpeedVector().x, enemy.getTopSpeed() });
+			}
+			else if (enemy.getSpeedVector().y < -(enemy.getTopSpeed()))
+			{
+				enemy.setSpeedVector({ enemy.getSpeedVector().x, -enemy.getTopSpeed() });
+			}
 		}
-		else if (enemy.getSpeedVector().x < -(enemy.getTopSpeed()))
+		if (enemy.getAttackingPlayer() == true)
 		{
-			enemy.setSpeedVector({-enemy.getTopSpeed(), enemy.getSpeedVector().y });
-		}
-		if (enemy.getSpeedVector().y > enemy.getTopSpeed())
-		{
-			enemy.setSpeedVector({ enemy.getSpeedVector().x, enemy.getTopSpeed() });
-		}
-		else if (enemy.getSpeedVector().y < -(enemy.getTopSpeed()))
-		{
-			enemy.setSpeedVector({ enemy.getSpeedVector().x, -enemy.getTopSpeed() });
+			if (enemy.getSpeedVector().x > enemy.getSprintSpeed()) // fix speed if faster than sprinting speed and engaged
+			{
+				enemy.setSpeedVector({ enemy.getSprintSpeed(),enemy.getSpeedVector().y });
+			}
+			else if (enemy.getSpeedVector().x < -(enemy.getSprintSpeed()))
+			{
+				enemy.setSpeedVector({ -enemy.getSprintSpeed(), enemy.getSpeedVector().y });
+			}
+			if (enemy.getSpeedVector().y > enemy.getSprintSpeed())
+			{
+				enemy.setSpeedVector({ enemy.getSpeedVector().x, enemy.getSprintSpeed() });
+			}
+			else if (enemy.getSpeedVector().y < -(enemy.getSprintSpeed()))
+			{
+				enemy.setSpeedVector({ enemy.getSpeedVector().x, -enemy.getSprintSpeed() });
+			}
 		}
 		enemy.setVelocity(enemy.getSpeedVector());
 		enemy.setDistToGoal(std::sqrt((enemy.getNewPos().x - enemy.getPosition().x) * (enemy.getNewPos().x - enemy.getPosition().x) +

@@ -21,13 +21,12 @@ Player::Player() : m_playerSprite(m_playerTexture), m_weaponSprite(m_weaponTxt)
 	m_playerSprite.setOrigin({ 100,100 });
 	m_playerSprite.setScale({ 0.3f,0.3f });
 	m_playerSprite.setPosition(m_playerPosition);
-	m_playerHealth = 20;
 	// Default stats for weapons
 	m_meleeStats = {0.5f, 0.f, 10.f, 150.f}; // cooldown - speed - damage - range
 	m_shortStats = {0.15f, 600.f, 8.f , 400.f};
 	m_mediumStats = {0.40f, 900.f, 16.f, 800.f};
 	m_longStats = {1.0f, 1600.f, 32.f, 2400.f};
-	m_playerStats = { 20.0f,100.0f, 240.0f,25.0f, 0.0f }; // health, walk speed, sprint speed, accel, regen
+	m_playerStats = { 20.0f,100.0f, 240.0f,25.0f, 0.1f }; // health, walk speed, sprint speed, accel, regen
 	m_playerHealth = m_playerStats.getHealth();
 }
 
@@ -43,8 +42,33 @@ void Player::update(float dt, Level& level)
 {
 	if (!isDead)
 	{
+		updateReputation();
+		if (m_playerHealth <= 0)
+		{
+			isDead = true;
+		}
+		if (m_playerHealth < m_playerStats.getHealth())
+		{
+			m_playerHealth += m_playerStats.getRegen() * dt;
+		}
+
+		if (m_rollCooldownTimer > 0)
+		{
+			m_rollCooldownTimer -= dt;
+		}
+		if (m_isRolling)
+		{
+			m_rollTimer += dt;
+			m_playerVelocity += m_rollDirection * m_rollSpeed;
+			m_playerSprite.rotate(sf::degrees( 1800.f * dt));
+
+			if (m_rollTimer >= m_rollDuration)
+			{
+				m_isRolling = false;
+			}
+		}
+
 		m_playerMovement = m_playerVelocity * dt; // Multiply by delta time - time between frames - to make sure movement is always at constant speed
-		m_playerHealth += m_playerStats.getRegen() * dt;
 		moveWithCollisions(m_playerMovement, level);
 		m_playerSprite.setPosition(m_playerPosition);
 		if (m_weapon) // if a weapon is created, keep it glued to the player
@@ -65,8 +89,11 @@ void Player::updateAim(sf::Vector2f t_mousePos, float facingDir)
 {
 	if (!isDead)
 	{
-		m_playerAim = t_mousePos;
-		m_playerSprite.setRotation(sf::degrees(facingDir));
+		if (!m_isRolling)
+		{
+			m_playerAim = t_mousePos;
+			m_playerSprite.setRotation(sf::degrees(facingDir));
+		}
 	}
 }
 
@@ -202,6 +229,30 @@ void Player::moveAxis(float dx, float dy, Level& level)
 	}
 }
 
+void Player::startRoll(sf::Vector2f direction)
+{
+	if (m_rollCooldownTimer > 0)
+	{
+		return;
+	}
+	if (m_isRolling)
+	{
+		return;
+	}
+	m_isRolling = true;
+	m_rollTimer = 0.0f;
+
+	//normalize direction
+	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+	if (length != 0)
+	{
+		m_rollDirection = direction / length;
+	}
+	m_rollCooldownTimer = m_rollCooldown;
+
+}
+
 void Player::tryBuyWeaponUpgrade(WeaponUpgradeType t_type, weaponType t_weapon)
 {
 	int cost = m_weaponUpgrades.getCost(t_type,t_weapon);
@@ -233,4 +284,27 @@ void Player::recalculateStats()
 	m_weaponUpgrades.ApplyUpgrades(m_shortStats, weaponType::short_range);
 	m_weaponUpgrades.ApplyUpgrades(m_mediumStats, weaponType::medium_range);
 	m_weaponUpgrades.ApplyUpgrades(m_longStats, weaponType::long_range);
+}
+
+void Player::updateReputation()
+{
+	m_reputation = 0;
+
+	for (size_t w = 0; w < 4; ++w)
+	{
+		for (size_t u = 0; u < 4; ++u)
+		{
+			m_reputation += m_weaponUpgrades.getLevel((WeaponUpgradeType)u, (weaponType)w);
+		}
+	}
+
+	for (size_t u = 0; u < 5; ++u)
+	{
+		m_reputation -= m_playerUpgrades.getLevel((PlayerUpgradeType)u) * 2;
+	}
+
+	if (m_reputation < 0)
+	{
+		m_playerSprite.setColor(sf::Color(255, 255 + (m_reputation * 10), 255 + (m_reputation * 10), 255));
+	}
 }

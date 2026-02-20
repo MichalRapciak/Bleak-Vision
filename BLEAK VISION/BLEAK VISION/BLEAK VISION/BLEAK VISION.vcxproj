@@ -189,6 +189,7 @@
     <ClInclude Include="SkillTree.h" />
     <ClInclude Include="SplashScreen.h" />
     <ClInclude Include="StatModifiers.h" />
+    <ClInclude Include="Wave.h" />
     <ClInclude Include="WeaponUpgradeLevels.h" />
     <ClInclude Include="WeaponUpgradeType.h" />
     <ClInclude Include="Weapon.h" />

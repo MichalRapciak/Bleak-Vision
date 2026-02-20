@@ -11,12 +11,9 @@ public:
 		{
 		}
 	}
-	//sf::RectangleShape getDebugBox() const override { return m_debugBox; } //debug box to show weapon hit area
-
 private:
-	//sf::RectangleShape m_debugBox;
 	float m_weaponAmmo = 0;
 
-	virtual void fire(Player& player, GamePlay& game) override; // only the weapon class decides if the current weapon type is allowed to fire
+	virtual void fire(Entity& entity, GamePlay& game) override; // only the weapon class decides if the current weapon type is allowed to fire
 
 };

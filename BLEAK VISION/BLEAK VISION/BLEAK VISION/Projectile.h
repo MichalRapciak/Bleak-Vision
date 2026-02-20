@@ -4,6 +4,7 @@
 #include "HitInfo.h"
 
 class Level;
+class Enemy;
 
 class Projectile : public Entity
 {
@@ -23,13 +24,13 @@ public:
 
 	bool getDead() const { return m_isDead; }
 	float getDamage() const { return m_damage; }
-	sf::Vector2f getPosition() { return m_position; }
+	sf::Vector2f getPosition() const override { return m_position; }
 	void setDead() { m_isDead = true; }
 
 	float getHealth() const override { return 0; }
 	sf::FloatRect getBoundingBox() const override { return m_projSprite.getGlobalBounds(); }
 	void takeDamage(float amount) override { }
-	sf::Sprite getSprite() { return m_projSprite; }
+	sf::Sprite getSprite() const override { return m_projSprite; }
 
 private:
 	sf::Vector2f m_velocity;

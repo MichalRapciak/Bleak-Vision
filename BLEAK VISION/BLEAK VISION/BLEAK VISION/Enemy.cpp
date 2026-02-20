@@ -1,8 +1,14 @@
 #include "Enemy.h"
 #include "Level.h"
 #include "Player.h"
+#include <random>
+#include "Weapon.h"
+#include "Melee.h"
+#include "ShortRange.h"
+#include "MediumRange.h"
+#include "LongRange.h"
 
-Enemy::Enemy() : m_enemySprite(m_enemyTexture)
+Enemy::Enemy(int wave) : m_enemySprite(m_enemyTexture), m_weaponSprite(m_weaponTxt)
 {
 	if (!m_enemyTexture.loadFromFile("Assets/Player/playerplaceholder.png", false, sf::IntRect({ 0,0 }, { 200, 200 }))) // if texture doesnt load, output text
 	{
@@ -15,6 +21,15 @@ Enemy::Enemy() : m_enemySprite(m_enemyTexture)
 	m_enemySprite.setScale({ 0.3f,0.3f });
 	m_enemySprite.setColor(sf::Color::Red);
 	m_enemySprite.setPosition(m_enemyPosition);
+
+	m_meleeStats = { 1.0f - (0.05f * wave), 0.f, 3.f + (3.f * wave), 50.f + (20.f * wave)}; // cooldown - speed - damage - range
+	m_shortStats = { 0.80f - (0.05f * wave), 600.f + (50.0f * wave), 4.f + (4.f * wave), 300.f + (25.f * wave)};
+	m_mediumStats = { 2.0f - (0.05f * wave), 900.f + (50.0f * wave), 8.f + (4.f * wave), 500.f + (25.f * wave)};
+	m_longStats = { 3.5f - (0.05f * wave), 1600.f + (50.0f * wave), 16.f + (4.f * wave), 2000.f + (25.f * wave) };
+	m_enemyHealth = 20 + (5.f * wave);
+	m_enemySprintSpeed = 140 + (20.f * wave);
+
+	pickRandomWeapon();
 }
 
 Enemy::~Enemy()
@@ -40,6 +55,14 @@ void Enemy::update(float dt, Level& level, Player& player)
 		m_enemyMovement = m_enemyVelocity * dt; // Multiply by delta time - time between frames - to make sure movement is always at constant speed
 		moveWithCollisions(m_enemyMovement, level);
 		m_enemySprite.setPosition(m_enemyPosition);
+		if (m_weapon) // if a weapon is created, keep it glued to the player
+		{
+			m_weaponSprite.setPosition({ m_enemyPosition.x, m_enemyPosition.y });
+			m_weaponSprite.setRotation(m_enemySprite.getRotation());
+			m_weaponSprite.setColor(sf::Color::Red);
+			m_weapon->updateCooldown(dt);
+		}
+
 	}
 }
 
@@ -54,6 +77,21 @@ void Enemy::updateAim(sf::Vector2f t_playerPos, float facingDir)
 	{
 		m_enemyAim = t_playerPos;
 		m_enemySprite.setRotation(sf::degrees(facingDir));
+	}
+}
+
+/// <summary>
+/// This function is in charge of shooting
+/// </summary>
+/// <param name="dt"></param>
+void Enemy::shooting(float dt, GamePlay& game, sf::Vector2f playerPos, Level& level)
+{
+	if (m_weapon && hasLineOfSight(playerPos, level) == true) //if holding a weapon and you have a line of sight, try shoot.
+	{
+		m_weapon->tryFire(dt, *this, game); // *this passes this (the enemy) to the weapon
+	}
+	else
+	{
 	}
 }
 
@@ -135,4 +173,58 @@ void Enemy::moveAxis(float dx, float dy, Level& level)
 			}
 		}
 	}
+}
+
+void Enemy::pickRandomWeapon()
+{
+	randomNo = (rand() % 40) + 1;
+	if (randomNo < 25)
+	{
+		m_weapon = std::make_unique<Melee>(&m_meleeStats); // Creates Melee Weapon instance
+		m_weaponType = weaponType::melee;
+	}
+	else if (randomNo < 35)
+	{
+		m_weapon = std::make_unique<ShortRange>(&m_shortStats);
+		m_weaponType = weaponType::short_range;
+	}
+	else if (randomNo < 39)
+	{
+		m_weapon = std::make_unique<MediumRange>(&m_mediumStats);
+		m_weaponType = weaponType::medium_range;
+	}
+	else if (randomNo <= 41)
+	{
+		m_weapon = std::make_unique<LongRange>(&m_longStats);
+		m_weaponType = weaponType::long_range;
+	}
+	m_weaponSprite.setTexture(m_weapon->getTxt()); // Takes texture of current weapon (in this case melee in the melee class)
+	sf::Vector2i txtSize = { (int)m_weaponSprite.getTexture().getSize().x, (int)m_weaponSprite.getTexture().getSize().y }; // gets the size of the texture
+	m_weaponSprite.setTextureRect(sf::IntRect({ 0,0 }, { txtSize.x, txtSize.y })); // sets the texture rectangle to the size of the texture - so you can actually see it
+	m_weaponSprite.setOrigin({ txtSize.x / 2.0f, txtSize.y / 2.0f }); // sets texture position to the middle of the texture. Will be different later
+}
+
+bool Enemy::hasLineOfSight(sf::Vector2f playerPos, Level& level)
+{
+	sf::Vector2f direction = playerPos - m_enemyPosition; // get direction of line of sight
+	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y); // get the distance bullet has to travel
+
+	direction /= length; // normalize the direction
+
+	float checkSize = 25.0f; // check every 1/4 of a box ( box is 100px)
+	sf::Vector2f currentCheck = m_enemyPosition; // current point being checked
+
+	for (float travelled = 0; travelled < length; travelled += checkSize) // loop to check boxes on the way to player
+	{
+		sf::Vector2i tile = { (int)currentCheck.x / 100, (int)currentCheck.y / 100 }; // current tile
+
+		if (level.isSolid({ tile.x, tile.y }) == true) // if current tile is wall
+		{
+			return false; // no line of sight
+		}
+		currentCheck += direction * checkSize; // change current check to the next point
+
+	}
+
+	return true;
 }
